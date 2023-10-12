@@ -1,0 +1,27 @@
+{
+  "name": "react-native-skia-responsive-text",
+  "private": true,
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:MatiPl01/react-native-skia-responsive-text.git",
+  "author": "Mateusz Łopaciński <lop.mateusz.2001@gmail.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "eslint-config-react-native-matipl01": "^1.0.2",
+    "jest": "^29.7.0",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2"
+  },
+  "scripts": {
+    "start": "yarn workspace example start",
+    "android": "yarn workspace example android",
+    "ios": "yarn workspace example ios",
+    "pod": "yarn workspace example pod"
+  },
+  "workspaces": [
+    "example"
+  ]
+}
