@@ -10,22 +10,22 @@
     "access": "public"
   },
   "devDependencies": {
+    "eslint": "^8.52.0",
     "eslint-config-react-native-matipl01": "^1.0.2",
     "jest": "^29.7.0",
     "prettier": "^3.0.3",
-    "typescript": "^5.2.2",
+    "react": "^18.2.0",
     "react-native": "^0.72.5",
-    "react": "^18.2.0"
+    "typescript": "^5.2.2"
   },
   "resolutions": {
     "react": "^18.2.0",
     "react-native": "^0.72.5"
   },
   "scripts": {
-    "start": "yarn workspace example start",
-    "android": "yarn workspace example android",
-    "ios": "yarn workspace example ios",
-    "pod": "yarn workspace example pod"
+    "example": "yarn workspace example start",
+    "example:android": "yarn workspace example android",
+    "example:ios": "yarn workspace example ios"
   },
   "workspaces": [
     "example"
