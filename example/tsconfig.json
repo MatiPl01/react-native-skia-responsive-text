@@ -1,12 +1,12 @@
 {
   "extends": "eslint-config-react-native-matipl01/tsconfig.base",
   "compilerOptions": {
-    "rootDir": "src",
-    "baseUrl": "src",
+    "rootDir": ".",
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
+      "@/*": ["src/*"],
       "react-native-skia-responsive-text": ["../src/"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "index.ts"]
 }

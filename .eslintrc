@@ -1,3 +1,6 @@
 {
-  "extends": "react-native-matipl01"
+  "extends": "react-native-matipl01",
+  "parserOptions": {
+    "project": ["./tsconfig.json", "./example/tsconfig.json"]
+  }
 }
