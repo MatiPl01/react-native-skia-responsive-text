@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "author": "Mateusz Łopaciński <lop.mateusz.2001@gmail.com>",
   "devDependencies": {
+    "@shopify/react-native-skia": "^0.1.214",
     "eslint": "^8.52.0",
     "eslint-config-react-native-matipl01": "^1.0.2",
     "husky": "^8.0.0",
@@ -11,10 +12,9 @@
     "prettier": "^3.0.3",
     "react": "^18.2.0",
     "react-native": "^0.72.5",
+    "react-native-reanimated": "^3.5.4",
     "syncpack": "^11.2.1",
-    "typescript": "^5.2.2",
-    "@shopify/react-native-skia": "^0.1.214",
-    "react-native-reanimated": "^3.5.4"
+    "typescript": "^5.2.2"
   },
   "license": "MIT",
   "lint-staged": {
@@ -28,6 +28,12 @@
     ]
   },
   "main": "index.js",
+  "peerDependencies": {
+    "@shopify/react-native-skia": ">=0.1.75",
+    "react": "*",
+    "react-native": "*",
+    "react-native-reanimated": ">=2.0.0"
+  },
   "private": true,
   "publishConfig": {
     "access": "public"
