@@ -4,16 +4,11 @@ import { PropsWithChildren, useState } from 'react';
 import { StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ResponsiveText } from 'react-native-skia-responsive-text';
+import { useStyleEditorContext } from 'src/context';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-var-requires
 const FONT = require('../../assets/Poppins-Regular.ttf') as FontSource &
   DataSourceParam;
-
-const SHORT_TEXT =
-  'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Debitis nulla tenetur libero.';
-
-const LONG_TEXT =
-  'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quam dolorum voluptatum consequuntur asperiores commodi officia enim? Delectus, deleniti expedita dolores rem, cupiditate hic iure, perspiciatis reiciendis quae impedit voluptate aspernatur necessitatibus adipisci! Vitae voluptatibus minima illum recusandae qui similique officia a delectus quod repellat saepe veniam placeat, neque eos quos?';
 
 type PreviewContainerProps = PropsWithChildren<{
   heading: string;
@@ -51,11 +46,12 @@ export default function TextPreview() {
   });
 
   const dimensions = useWindowDimensions();
-
   const [canvasDimensions, setCanvasDimensions] = useState({
     height: 0,
     width: 0
   });
+
+  const { lineHeight, text } = useStyleEditorContext();
 
   if (!fontsLoaded) {
     return null;
@@ -82,9 +78,10 @@ export default function TextPreview() {
             style={{
               color: 'white',
               fontFamily: 'Poppins-Regular',
-              fontSize
+              fontSize,
+              lineHeight
             }}>
-            {LONG_TEXT}
+            {text}
           </Text>
         </View>
       </PreviewContainer>
@@ -104,7 +101,8 @@ export default function TextPreview() {
             color='white'
             font={font}
             height={canvasDimensions.height - 2 * previewInnerPadding}
-            text={LONG_TEXT}
+            lineHeight={lineHeight}
+            text={text}
             width={canvasDimensions.width - 2 * previewInnerPadding}
             x={previewInnerPadding}
             y={previewInnerPadding}
