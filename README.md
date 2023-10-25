@@ -2,7 +2,7 @@
 
 A library providing a wrapper for the React Native Skia Text component, offering features like user-friendly text alignment, efficient multiline text management, and straightforward text truncation.
 
-<div style='align-items: center; justify-content: center;'>
+<div align="center">
   <img src="./docs/banner.gif" />
 </div>
 
