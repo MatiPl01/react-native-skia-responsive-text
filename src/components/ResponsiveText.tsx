@@ -2,7 +2,6 @@ import { Group, Rect, SkFont, TextProps } from '@shopify/react-native-skia';
 import { memo, useMemo } from 'react';
 import { runOnJS, SharedValue, useDerivedValue } from 'react-native-reanimated';
 
-import { DEFAULT_FONT } from '@/constants';
 import { useAnimatableValue } from '@/hooks';
 import {
   AnimatableProps,
@@ -43,7 +42,7 @@ function ResponsiveText({
   backgroundColor: backgroundColorProp = 'transparent',
   children,
   ellipsizeMode,
-  font = DEFAULT_FONT,
+  font,
   height = 0,
   horizontalAlignment: horizontalAlignmentProp = 'left',
   lineHeight: lineHeightProp,

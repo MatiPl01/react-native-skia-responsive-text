@@ -1,3 +1,10 @@
+const path = require('path');
+
+console.log(__dirname);
+
+const rootDir = path.resolve(__dirname, '..');
+const rootPkg = require(path.join(rootDir, 'package.json'));
+
 module.exports = function (api) {
   api.cache(true);
   return {
@@ -10,11 +17,11 @@ module.exports = function (api) {
           extensions: ['.ts', '.tsx', '.svg', '.json'],
           alias: {
             // This needs to be mirrored in tsconfig.json
-            '@': './src',
-            'react-native-skia-responsive-text': '../src'
+            [rootPkg.name]: path.join(rootDir, rootPkg['react-native'])
           }
         }
-      ]
+      ],
+      'react-native-reanimated/plugin'
     ]
   };
 };
