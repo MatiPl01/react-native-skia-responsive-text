@@ -2,8 +2,7 @@ import { Group, Rect, SkFont, TextProps } from '@shopify/react-native-skia';
 import { memo, useMemo } from 'react';
 import { runOnJS, SharedValue, useDerivedValue } from 'react-native-reanimated';
 
-import { DEFAULT_FONT } from '@/constants';
-import { useAnimatableValue } from '@/hooks';
+import { useAnimatableValue } from '../hooks';
 import {
   AnimatableProps,
   AnimationSettings,
@@ -12,13 +11,12 @@ import {
   PartialBy,
   TextLineData,
   VerticalAlignment
-} from '@/types';
+} from '../types';
 import {
   getTextLinesAlignment,
   getVerticalAlignmentOffset,
   wrapText
-} from '@/utils';
-
+} from '../utils';
 import TextLine from './TextLine';
 
 type ResponsiveTextProps = PartialBy<TextProps, 'x' | 'y'> & {
@@ -43,7 +41,7 @@ function ResponsiveText({
   backgroundColor: backgroundColorProp = 'transparent',
   children,
   ellipsizeMode,
-  font = DEFAULT_FONT,
+  font,
   height = 0,
   horizontalAlignment: horizontalAlignmentProp = 'left',
   lineHeight: lineHeightProp,

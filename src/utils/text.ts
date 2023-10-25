@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { SkFont } from '@shopify/react-native-skia';
 
-import { EllipsizeMode, TextLineData } from '@/types';
+import { EllipsizeMode, TextLineData } from '../types';
 
 const ELLIPSIS = '...';
 

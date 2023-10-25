@@ -1,4 +1,4 @@
-import { HorizontalAlignment, TextLineData, VerticalAlignment } from '@/types';
+import { HorizontalAlignment, TextLineData, VerticalAlignment } from '../types';
 
 export const getTextLinesAlignment = (
   lines: Array<TextLineData>,

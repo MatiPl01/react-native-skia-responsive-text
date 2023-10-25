@@ -7,7 +7,7 @@ import {
   withTiming
 } from 'react-native-reanimated';
 
-import { AnimationSettings } from '@/types';
+import { AnimationSettings } from '../types';
 
 type TextLineProps = Omit<TextProps, 'x' | 'y'> & {
   animationProgress?: SharedValue<number>;
