@@ -6,6 +6,6 @@
       "react-native-skia-responsive-text": ["../src"]
     }
   },
-  "include": ["src", "index.ts"],
+  "include": ["src", "index.ts", "assets"],
   "exclude": ["metro.config.js"]
 }

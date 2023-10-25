@@ -2,6 +2,10 @@
 
 A library providing a wrapper for the React Native Skia Text component, offering features like user-friendly text alignment, efficient multiline text management, and straightforward text truncation.
 
+<div style='align-items: center; justify-content: center;'>
+  <img src="./docs/banner.gif" />
+</div>
+
 ## Motivation
 
 React Native Skia currently offers a rather limited API for rendering text. There's ongoing development to enhance text support in future releases, but this progress might still take some time until it's officially rolled out (please refer to [this](https://github.com/Shopify/react-native-skia/issues/968) issue for more detail).
