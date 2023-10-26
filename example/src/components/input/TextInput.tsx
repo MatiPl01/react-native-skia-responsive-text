@@ -15,7 +15,7 @@ type TextInputProps = RNTextInputProps & {
   onClear?: () => void;
 };
 
-export default function TextInput({ onClear, ...rest }: TextInputProps) {
+export default function TextInput({ onClear, value, ...rest }: TextInputProps) {
   const inputRef = useRef<RNTextInput>(null);
 
   useBlurOnDismiss(inputRef);
@@ -25,8 +25,13 @@ export default function TextInput({ onClear, ...rest }: TextInputProps) {
       onPress={() => inputRef.current?.focus()}
       onStartShouldSetResponder={() => true}>
       <View style={styles.wrapper}>
-        <RNTextInput ref={inputRef} style={styles.input} {...rest} />
-        {true && (
+        <RNTextInput
+          ref={inputRef}
+          style={styles.input}
+          value={value}
+          {...rest}
+        />
+        {value && (
           <TouchableOpacity style={styles.clearButton} onPress={onClear}>
             <MaterialIcons color='#333' name='clear' size={16} />
           </TouchableOpacity>
@@ -52,7 +57,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     flexDirection: 'row',
-    flexGrow: 1,
+    flexShrink: 1,
     height: INPUT_FIELD_HEIGHT,
     justifyContent: 'space-between'
   }

@@ -28,17 +28,38 @@ const verticalAlignmentOptions: Array<{
   { label: 'bottom', value: 'bottom' }
 ];
 
-export default function StyleEditor() {
+type StyleEditorProps = {
+  canvasDimensions: { height: number; width: number };
+  previewInnerPadding: number;
+};
+
+export default function StyleEditor({
+  canvasDimensions,
+  previewInnerPadding
+}: StyleEditorProps) {
   const {
+    height,
     horizontalAlignment,
     lineHeight,
+    setHeight,
     setHorizontalAlignment,
     setLineHeight,
     setText,
     setVerticalAlignment,
+    setWidth,
     text,
-    verticalAlignment
+    verticalAlignment,
+    width
   } = useStyleEditorContext();
+
+  const maxWidth = +(
+    canvasDimensions.width -
+    2 * previewInnerPadding
+  ).toFixed();
+  const maxHeight = +(
+    canvasDimensions.height -
+    2 * previewInnerPadding
+  ).toFixed();
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
@@ -54,6 +75,7 @@ export default function StyleEditor() {
             />
           </View>
         </View>
+
         <View style={styles.section}>
           <Text style={styles.sectionLabel}>lineHeight</Text>
           <View style={styles.sectionInput}>
@@ -66,6 +88,7 @@ export default function StyleEditor() {
             />
           </View>
         </View>
+
         <View style={styles.sectionGroup}>
           <Text style={styles.sectionLabel}>Alignment</Text>
           <View style={styles.subSection}>
@@ -87,6 +110,30 @@ export default function StyleEditor() {
             />
           </View>
         </View>
+
+        <View style={styles.sectionGroup}>
+          <Text style={styles.sectionLabel}>Dimensions</Text>
+          <View style={styles.subSection}>
+            <Text style={styles.subSectionLabel}>horizontal</Text>
+            <NumberInput
+              max={maxWidth}
+              min={0}
+              placeholder='Width'
+              value={width}
+              onChange={setWidth}
+            />
+          </View>
+          <View style={styles.subSection}>
+            <Text style={styles.subSectionLabel}>vertical</Text>
+            <NumberInput
+              max={maxHeight}
+              min={0}
+              placeholder='Height'
+              value={height}
+              onChange={setHeight}
+            />
+          </View>
+        </View>
       </View>
     </ScrollView>
   );
@@ -101,6 +148,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
+    flex: 1,
     marginTop: 20
   },
   section: {

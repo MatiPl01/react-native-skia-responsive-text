@@ -1,5 +1,5 @@
 import { Canvas, SkFont } from '@shopify/react-native-skia';
-import { PropsWithChildren, useState } from 'react';
+import { PropsWithChildren } from 'react';
 import { StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { ResponsiveText } from 'react-native-skia-responsive-text';
 import { useStyleEditorContext } from 'src/context';
@@ -34,23 +34,29 @@ function PreviewContainer({
 type TextPreviewProps = {
   font: SkFont;
   fontSize: number;
+  previewHeight: number;
+  previewInnerPadding: number;
+  setCanvasDimensions: (canvasDimensions: {
+    height: number;
+    width: number;
+  }) => void;
 };
 
-export default function TextPreview({ font, fontSize }: TextPreviewProps) {
-  const dimensions = useWindowDimensions();
-  const [canvasDimensions, setCanvasDimensions] = useState({
-    height: 0,
-    width: 0
-  });
-
-  const { horizontalAlignment, lineHeight, text, verticalAlignment } =
-    useStyleEditorContext();
-
-  const previewHeight = 0.25 * dimensions.height;
-  const previewInnerPadding = 0.025 * dimensions.width;
-
-  const textWidth = canvasDimensions.width - 2 * previewInnerPadding;
-  const textHeight = canvasDimensions.height - 2 * previewInnerPadding;
+export default function TextPreview({
+  font,
+  fontSize,
+  previewHeight,
+  previewInnerPadding,
+  setCanvasDimensions
+}: TextPreviewProps) {
+  const {
+    height,
+    horizontalAlignment,
+    lineHeight,
+    text,
+    verticalAlignment,
+    width
+  } = useStyleEditorContext();
 
   return (
     <>
@@ -63,7 +69,7 @@ export default function TextPreview({ font, fontSize }: TextPreviewProps) {
               color: 'white',
               fontFamily: 'Poppins-Regular',
               fontSize,
-              height: textHeight,
+              height,
               lineHeight,
               textAlign:
                 horizontalAlignment === 'center-left' ||
@@ -72,7 +78,7 @@ export default function TextPreview({ font, fontSize }: TextPreviewProps) {
                   : horizontalAlignment,
               verticalAlign:
                 verticalAlignment === 'center' ? 'middle' : verticalAlignment,
-              width: textWidth
+              width
             }}>
             {text}
           </Text>
@@ -80,25 +86,21 @@ export default function TextPreview({ font, fontSize }: TextPreviewProps) {
       </PreviewContainer>
 
       {/* ResponsiveText preview */}
-      <PreviewContainer heading='React Native Text' height={previewHeight}>
+      <PreviewContainer heading='Skia ResponsiveText' height={previewHeight}>
         <Canvas
           style={styles.previewContainer}
-          onLayout={({
-            nativeEvent: {
-              layout: { height, width }
-            }
-          }) => {
-            setCanvasDimensions({ height, width });
+          onLayout={({ nativeEvent: { layout } }) => {
+            setCanvasDimensions({ height: layout.height, width: layout.width });
           }}>
           <ResponsiveText
             color='white'
             font={font}
-            height={textHeight}
+            height={height}
             horizontalAlignment={horizontalAlignment}
             lineHeight={lineHeight}
             text={text}
             verticalAlignment={verticalAlignment}
-            width={textWidth}
+            width={width}
             x={previewInnerPadding}
             y={previewInnerPadding}
           />

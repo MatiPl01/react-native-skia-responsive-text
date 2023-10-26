@@ -6,6 +6,7 @@ import {
   useFont
 } from '@shopify/react-native-skia';
 import { FontSource, useFonts } from 'expo-font';
+import { useState } from 'react';
 import {
   Dimensions,
   KeyboardAvoidingView,
@@ -31,6 +32,11 @@ export default function EditorExample() {
     'Poppins-Regular': FONT
   });
 
+  const [canvasDimensions, setCanvasDimensions] = useState({
+    height: 0,
+    width: 0
+  });
+
   if (!fontsLoaded) {
     return null;
   }
@@ -42,6 +48,9 @@ export default function EditorExample() {
       </SafeAreaView>
     );
   }
+
+  const previewHeight = 0.2 * height;
+  const previewInnerPadding = 0.025 * width;
 
   return (
     <KeyboardAvoidingView style={styles.fill}>
@@ -57,11 +66,20 @@ export default function EditorExample() {
               />
             </Rect>
           </Canvas>
-          <SafeAreaView>
+          <SafeAreaView style={styles.fill}>
             {/* Text preview */}
-            <TextPreview font={font} fontSize={fontSize} />
+            <TextPreview
+              font={font}
+              fontSize={fontSize}
+              previewHeight={previewHeight}
+              previewInnerPadding={previewInnerPadding}
+              setCanvasDimensions={setCanvasDimensions}
+            />
             {/* Style editor */}
-            <StyleEditor />
+            <StyleEditor
+              canvasDimensions={canvasDimensions}
+              previewInnerPadding={previewInnerPadding}
+            />
           </SafeAreaView>
         </View>
       </StyleEditorProvider>

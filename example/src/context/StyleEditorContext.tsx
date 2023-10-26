@@ -10,10 +10,12 @@ const DEFAULT_TEXT =
 
 type StyleEditorContextType = {
   ellipsizeMode: EllipsizeMode | undefined;
+  height: number | undefined;
   horizontalAlignment: HorizontalAlignment | undefined;
   lineHeight: number | undefined;
   numberOfLines: number | undefined;
   setEllipsizeMode: (ellipsizeMode: EllipsizeMode | undefined) => void;
+  setHeight: (height: number | undefined) => void;
   setHorizontalAlignment: (
     horizontalAlignment: HorizontalAlignment | undefined
   ) => void;
@@ -23,8 +25,10 @@ type StyleEditorContextType = {
   setVerticalAlignment: (
     verticalAlignment: VerticalAlignment | undefined
   ) => void;
+  setWidth: (width: number | undefined) => void;
   text: string;
   verticalAlignment: VerticalAlignment | undefined;
+  width: number | undefined;
 };
 
 const StyleEditorContext = createContext<StyleEditorContextType | null>(null);
@@ -57,6 +61,8 @@ export function StyleEditorProvider({
   const [verticalAlignment, setVerticalAlignment] = useState<
     VerticalAlignment | undefined
   >();
+  const [width, setWidth] = useState<number | undefined>();
+  const [height, setHeight] = useState<number | undefined>();
   const [text, setText] = useState(DEFAULT_TEXT);
 
   const handleSetText = useCallback((newText: string | undefined) => {
@@ -65,17 +71,21 @@ export function StyleEditorProvider({
 
   const contextValue: StyleEditorContextType = {
     ellipsizeMode,
+    height,
     horizontalAlignment,
     lineHeight,
     numberOfLines,
     setEllipsizeMode,
+    setHeight,
     setHorizontalAlignment,
     setLineHeight,
     setNumberOfLines,
     setText: handleSetText,
     setVerticalAlignment,
+    setWidth,
     text,
-    verticalAlignment
+    verticalAlignment,
+    width
   };
 
   return (
