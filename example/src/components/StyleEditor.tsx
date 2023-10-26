@@ -1,5 +1,8 @@
 import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { HorizontalAlignment } from 'react-native-skia-responsive-text';
+import {
+  HorizontalAlignment,
+  VerticalAlignment
+} from 'react-native-skia-responsive-text';
 import { useStyleEditorContext } from 'src/context';
 
 import { NumberInput, SelectInput, TextInput } from './input';
@@ -16,6 +19,15 @@ const horizontalAlignmentOptions: Array<{
   { label: 'center-right', value: 'center-right' }
 ];
 
+const verticalAlignmentOptions: Array<{
+  label: VerticalAlignment;
+  value: VerticalAlignment;
+}> = [
+  { label: 'top', value: 'top' },
+  { label: 'center', value: 'center' },
+  { label: 'bottom', value: 'bottom' }
+];
+
 export default function StyleEditor() {
   const {
     horizontalAlignment,
@@ -23,7 +35,9 @@ export default function StyleEditor() {
     setHorizontalAlignment,
     setLineHeight,
     setText,
-    text
+    setVerticalAlignment,
+    text,
+    verticalAlignment
   } = useStyleEditorContext();
 
   return (
@@ -52,19 +66,25 @@ export default function StyleEditor() {
             />
           </View>
         </View>
-        <View>
+        <View style={styles.sectionGroup}>
           <Text style={styles.sectionLabel}>Alignment</Text>
-          <View style={styles.section}>
-            <Text style={styles.sectionLabel}>horizontal</Text>
+          <View style={styles.subSection}>
+            <Text style={styles.subSectionLabel}>horizontal</Text>
             <SelectInput
-              options={horizontalAlignmentOptions}
+              items={horizontalAlignmentOptions}
+              placeholder='Horizontal Alignment'
               value={horizontalAlignment}
               onChange={setHorizontalAlignment}
             />
           </View>
-          <View style={styles.section}>
-            {/* <Text style={styles.sectionLabel}>vertical</Text>
-          <SelectInput  /> */}
+          <View style={styles.subSection}>
+            <Text style={styles.subSectionLabel}>vertical</Text>
+            <SelectInput
+              items={verticalAlignmentOptions}
+              placeholder='Vertical Alignment'
+              value={verticalAlignment}
+              onChange={setVerticalAlignment}
+            />
           </View>
         </View>
       </View>
@@ -87,7 +107,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     gap: 10,
-    marginBottom: 5
+    marginBottom: 15
+  },
+  sectionGroup: {
+    gap: 10,
+    marginBottom: 15
   },
   sectionInput: {
     flexBasis: '66%'
@@ -97,7 +121,18 @@ const styles = StyleSheet.create({
     flexBasis: '33%',
     fontFamily: 'Poppins-Regular',
     fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 5
+    fontWeight: 'bold'
+  },
+  subSection: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 10
+  },
+  subSectionLabel: {
+    color: '#777',
+    flexBasis: '33%',
+    fontFamily: 'Poppins-Regular',
+    fontSize: 12,
+    fontWeight: 'bold'
   }
 });

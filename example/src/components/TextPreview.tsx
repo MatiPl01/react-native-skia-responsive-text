@@ -1,13 +1,6 @@
-import {
-  Canvas,
-  DataSourceParam,
-  SkFont,
-  useFont
-} from '@shopify/react-native-skia';
-import { FontSource, useFonts } from 'expo-font';
+import { Canvas, SkFont } from '@shopify/react-native-skia';
 import { PropsWithChildren, useState } from 'react';
 import { StyleSheet, Text, useWindowDimensions, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { ResponsiveText } from 'react-native-skia-responsive-text';
 import { useStyleEditorContext } from 'src/context';
 
@@ -50,10 +43,14 @@ export default function TextPreview({ font, fontSize }: TextPreviewProps) {
     width: 0
   });
 
-  const { lineHeight, text } = useStyleEditorContext();
+  const { horizontalAlignment, lineHeight, text, verticalAlignment } =
+    useStyleEditorContext();
 
   const previewHeight = 0.25 * dimensions.height;
   const previewInnerPadding = 0.025 * dimensions.width;
+
+  const textWidth = canvasDimensions.width - 2 * previewInnerPadding;
+  const textHeight = canvasDimensions.height - 2 * previewInnerPadding;
 
   return (
     <>
@@ -66,7 +63,16 @@ export default function TextPreview({ font, fontSize }: TextPreviewProps) {
               color: 'white',
               fontFamily: 'Poppins-Regular',
               fontSize,
-              lineHeight
+              height: textHeight,
+              lineHeight,
+              textAlign:
+                horizontalAlignment === 'center-left' ||
+                horizontalAlignment === 'center-right'
+                  ? 'center'
+                  : horizontalAlignment,
+              verticalAlign:
+                verticalAlignment === 'center' ? 'middle' : verticalAlignment,
+              width: textWidth
             }}>
             {text}
           </Text>
@@ -87,10 +93,12 @@ export default function TextPreview({ font, fontSize }: TextPreviewProps) {
           <ResponsiveText
             color='white'
             font={font}
-            height={canvasDimensions.height - 2 * previewInnerPadding}
+            height={textHeight}
+            horizontalAlignment={horizontalAlignment}
             lineHeight={lineHeight}
             text={text}
-            width={canvasDimensions.width - 2 * previewInnerPadding}
+            verticalAlignment={verticalAlignment}
+            width={textWidth}
             x={previewInnerPadding}
             y={previewInnerPadding}
           />

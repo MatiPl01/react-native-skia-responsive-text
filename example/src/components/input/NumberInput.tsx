@@ -85,9 +85,13 @@ export default function NumberInput({
     <View style={styles.wrapper}>
       <TouchableOpacity
         style={styles.button}
-        onLongPress={() => setRepeatedAction(RepeatAction.Decrement)}
         onPress={handleDecrement}
-        onPressOut={() => setRepeatedAction(null)}>
+        onPressOut={() => setRepeatedAction(null)}
+        onLongPress={() => {
+          setTimeout(() => {
+            setRepeatedAction(RepeatAction.Decrement);
+          }, 0);
+        }}>
         <Text style={styles.buttonText}>-</Text>
       </TouchableOpacity>
       <TextInput
@@ -100,9 +104,13 @@ export default function NumberInput({
       />
       <TouchableOpacity
         style={styles.button}
-        onLongPress={() => setRepeatedAction(RepeatAction.Increment)}
         onPress={handleIncrement}
-        onPressOut={() => setRepeatedAction(null)}>
+        onPressOut={() => setRepeatedAction(null)}
+        onLongPress={() =>
+          setTimeout(() => {
+            setRepeatedAction(RepeatAction.Increment);
+          }, 0)
+        }>
         <Text style={styles.buttonText}>+</Text>
       </TouchableOpacity>
     </View>
