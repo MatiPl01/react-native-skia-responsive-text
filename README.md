@@ -1,3 +1,5 @@
+<a name="readme-top"></a>
+
 # 🔠 React Native Skia Responsive Text
 
 A library providing a wrapper for the React Native Skia Text component, offering features like user-friendly text alignment, efficient multiline text management, and straightforward text truncation.
@@ -11,6 +13,8 @@ A library providing a wrapper for the React Native Skia Text component, offering
 React Native Skia currently offers a rather limited API for rendering text. There's ongoing development to enhance text support in future releases, but this progress might still take some time until it's officially rolled out (please refer to [this](https://github.com/Shopify/react-native-skia/issues/968) issue for more detail).
 
 This lightweight library comes as a handy solution, providing a more straightforward API for managing text, similar to the React Native text API (a bit limited).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Installation
 
@@ -33,5 +37,7 @@ yarn add react-native-skia-responsive-text
 ```sh
 npm i react-native-skia-responsive-text
 ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Usage

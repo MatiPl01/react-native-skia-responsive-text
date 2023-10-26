@@ -19,6 +19,8 @@ import {
 } from '../utils';
 import TextLine from './TextLine';
 
+const LINE_HEIGHT_MULTIPLIER = 1.5;
+
 type ResponsiveTextProps = PartialBy<TextProps, 'x' | 'y'> & {
   ellipsizeMode?: EllipsizeMode;
   height?: number;
@@ -58,7 +60,9 @@ function ResponsiveText({
   // Create shared values from animatable props
   const backgroundColor = useAnimatableValue(backgroundColorProp);
 
-  const lineHeight = useAnimatableValue(lineHeightProp ?? fontSize);
+  const lineHeight = useAnimatableValue(
+    lineHeightProp ?? LINE_HEIGHT_MULTIPLIER * fontSize
+  );
   const horizontalAlignment = useAnimatableValue(horizontalAlignmentProp);
   const verticalAlignment = useAnimatableValue(verticalAlignmentProp);
 
@@ -90,7 +94,8 @@ function ResponsiveText({
   }, [textLines]);
   const textHeight = useDerivedValue(
     () =>
-      textLines.length * lineHeight.value - (lineHeight.value - 1.5 * fontSize)
+      textLines.length * lineHeight.value -
+      (lineHeight.value - LINE_HEIGHT_MULTIPLIER * fontSize)
   );
   const backgroundHeight = useDerivedValue(() =>
     Math.max(textHeight.value, height)
