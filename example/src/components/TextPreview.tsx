@@ -1,14 +1,15 @@
-import { Canvas, DataSourceParam, useFont } from '@shopify/react-native-skia';
+import {
+  Canvas,
+  DataSourceParam,
+  SkFont,
+  useFont
+} from '@shopify/react-native-skia';
 import { FontSource, useFonts } from 'expo-font';
 import { PropsWithChildren, useState } from 'react';
 import { StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ResponsiveText } from 'react-native-skia-responsive-text';
 import { useStyleEditorContext } from 'src/context';
-
-// eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-var-requires
-const FONT = require('../../assets/Poppins-Regular.ttf') as FontSource &
-  DataSourceParam;
 
 type PreviewContainerProps = PropsWithChildren<{
   heading: string;
@@ -37,14 +38,12 @@ function PreviewContainer({
   );
 }
 
-export default function TextPreview() {
-  const fontSize = 16;
+type TextPreviewProps = {
+  font: SkFont;
+  fontSize: number;
+};
 
-  const font = useFont(FONT, fontSize);
-  const [fontsLoaded, fontError] = useFonts({
-    'Poppins-Regular': FONT
-  });
-
+export default function TextPreview({ font, fontSize }: TextPreviewProps) {
   const dimensions = useWindowDimensions();
   const [canvasDimensions, setCanvasDimensions] = useState({
     height: 0,
@@ -52,18 +51,6 @@ export default function TextPreview() {
   });
 
   const { lineHeight, text } = useStyleEditorContext();
-
-  if (!fontsLoaded) {
-    return null;
-  }
-
-  if (!font || fontError) {
-    return (
-      <SafeAreaView>
-        <Text>There was a problem loading fonts</Text>
-      </SafeAreaView>
-    );
-  }
 
   const previewHeight = 0.25 * dimensions.height;
   const previewInnerPadding = 0.025 * dimensions.width;

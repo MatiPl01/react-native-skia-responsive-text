@@ -19,7 +19,7 @@ import {
 } from '../utils';
 import TextLine from './TextLine';
 
-const LINE_HEIGHT_MULTIPLIER = 1.45;
+const LINE_HEIGHT_MULTIPLIER = 1.5;
 
 type ResponsiveTextProps = PartialBy<TextProps, 'x' | 'y'> & {
   ellipsizeMode?: EllipsizeMode;

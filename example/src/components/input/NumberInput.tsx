@@ -1,8 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { INPUT_FIELD_HEIGHT, TEXT_INPUT_STYLE } from 'src/constants';
+import { INPUT_FIELD_HEIGHT } from 'src/constants';
 
 import TextInput from './TextInput';
+
+enum RepeatAction {
+  Increment,
+  Decrement
+}
 
 type NumberInputProps = {
   max?: number;
@@ -22,11 +27,12 @@ export default function NumberInput({
   value: valueProp
 }: NumberInputProps) {
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+
   const [value, setValue] = useState<number | undefined>(undefined);
 
-  useEffect(() => {
-    setValue(valueProp);
-  }, [valueProp]);
+  const [repeatedAction, setRepeatedAction] = useState<RepeatAction | null>(
+    null
+  );
 
   const handleChange = (text: string) => {
     clearTimeout(timeoutRef.current);
@@ -44,31 +50,59 @@ export default function NumberInput({
     }
   };
 
-  const handleIncrement = () => {
-    const newValue = Math.min(value ? value + step : min, max);
-    setValue(newValue);
-    onChange?.(newValue);
-  };
+  const handleIncrement = useCallback(() => {
+    setValue(oldValue => {
+      const newValue = Math.min(oldValue ? oldValue + step : min, max);
+      onChange?.(newValue);
+      return newValue;
+    });
+  }, [onChange]);
 
-  const handleDecrement = () => {
-    const newValue = Math.max(value ? value - step : max, min);
-    setValue(newValue);
-    onChange?.(newValue);
-  };
+  const handleDecrement = useCallback(() => {
+    setValue(oldValue => {
+      const newValue = Math.max(oldValue ? oldValue - step : max, min);
+      onChange?.(newValue);
+      return newValue;
+    });
+  }, [onChange]);
+
+  useEffect(() => {
+    if (repeatedAction === null) return;
+    const interval = setInterval(
+      repeatedAction === RepeatAction.Decrement
+        ? handleDecrement
+        : handleIncrement,
+      100
+    );
+    return () => clearInterval(interval);
+  }, [repeatedAction, handleDecrement, handleIncrement]);
+
+  useEffect(() => {
+    setValue(valueProp);
+  }, [valueProp]);
 
   return (
     <View style={styles.wrapper}>
-      <TouchableOpacity style={styles.button} onPress={handleDecrement}>
+      <TouchableOpacity
+        style={styles.button}
+        onLongPress={() => setRepeatedAction(RepeatAction.Decrement)}
+        onPress={handleDecrement}
+        onPressOut={() => setRepeatedAction(null)}>
         <Text style={styles.buttonText}>-</Text>
       </TouchableOpacity>
       <TextInput
         keyboardType='number-pad'
         placeholder={placeholder}
-        style={TEXT_INPUT_STYLE}
         value={value?.toString()}
         onChangeText={handleChange}
+        onClear={() => handleChange('')}
+        onFocus={() => setRepeatedAction(null)}
       />
-      <TouchableOpacity style={styles.button} onPress={handleIncrement}>
+      <TouchableOpacity
+        style={styles.button}
+        onLongPress={() => setRepeatedAction(RepeatAction.Increment)}
+        onPress={handleIncrement}
+        onPressOut={() => setRepeatedAction(null)}>
         <Text style={styles.buttonText}>+</Text>
       </TouchableOpacity>
     </View>
