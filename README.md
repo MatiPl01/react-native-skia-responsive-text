@@ -72,6 +72,8 @@ const styles = StyleSheet.create({
 });
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### Properties
 
 The `ResponsiveText` component accepts all the properties available to the `Text`` component from React Native Skia, while also introducing additional features. These include the ability to adjust text alignment, set the number of lines, and the ellipsize mode, among others.
@@ -83,7 +85,7 @@ The `ResponsiveText` component accepts all the properties available to the `Text
 | x                     | `number`                                                                                   | 0         | no       | Left position of the text                                                                                              |
 | y                     | `number`                                                                                   | 0         | no       | Top position the text                                                                                                  |
 | width                 | `number`                                                                                   | 0         | no       | Width of the text component (isn't required but should be specified to properly render text)                           |
-| height                | `number`                                                                                   | 0         | no       | Height of the text component (used only of the vertical alignment. Overflowing text is visible)                        |
+| height                | `number`                                                                                   | 0         | no       | Height of the text component (used only for the vertical alignment. Overflowing text is visible)                       |
 | lineHeight            | `number`                                                                                   | fontSize  | no       | Text line height                                                                                                       |
 | horizontalAlignment   | `'center'` &#124; `'center-left'` &#124; `'center-right'` &#124; `'left'` &#124; `'right'` | `left`    | no       | Text alignment in the X axis                                                                                           |
 | verticalAlignment     | `'bottom'` &#124; `'center'` &#124; `'top'`                                                | `top`     | no       | Text alignment in the Y axis                                                                                           |
@@ -105,6 +107,8 @@ type AnimationSettings = {
 ```
 
 \*\*animationProgress allows animating text based on custom progress value (e.g. when the user scrolls some content, opens the bottom sheet, etc.). It makes it easy to animate text in sync with another animation.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Animated properties
 
@@ -130,11 +134,29 @@ Animations based on settings specified in the `animationSettings` property. By d
 
 When `animationSettings` are specified, every change of `ResponsiveText` properties resulting in text lines position change (i.e. alignment, line height, text component height change) will be animated.
 
-**Example**
+#### Example
 
 https://github.com/MatiPl01/react-native-skia-responsive-text/assets/52978053/2ae0fb10-8e28-4090-9854-39df69fa1e48
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### Progress based animations
+
+Progress based animations are the alternative way to animate text. Instead of passing `animationSettings` property, you have to pass the `animationProgress` which is a reanimated shared value indicating the current transition progress.
+
+Every progress transition starts from the current text position and animates text lines to the new target position (updated alignment).
+
+#### How to properly create progress-based animations?
+
+To create smooth text animations, you have to follow these rules:
+
+1. Use reanimated shared values as `horizontalAlignment` and `verticalAlignment` instead of plain numbers (to ensure that there is no delay in updating alignment settings),
+2. Update `horizontalAlignment` and `verticalAlignment` before updating the `animationProgress` (the animation to new alignment values will start when the `animationProgress` is modified),
+3. Ensure that the `animationProgress` value is set to `0` before you start updating the progress (to start the animation from the current text position).
+
+#### Example
+
+https://github.com/MatiPl01/react-native-skia-responsive-text/assets/52978053/898a5aa3-0465-4292-909b-372337f4c67b
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

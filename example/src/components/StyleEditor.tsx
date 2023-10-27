@@ -76,6 +76,7 @@ export default function StyleEditor({
   previewInnerPadding
 }: StyleEditorProps) {
   const [animationType, setAnimationType] = useState<AnimationType>('none');
+  const [sliderProgress, setSliderProgress] = useState(0);
   const animationProgress = useSharedValue(0);
 
   const {
@@ -86,6 +87,7 @@ export default function StyleEditor({
     ellipsizeMode,
     height,
     horizontalAlignment,
+    horizontalAlignmentValue,
     lineHeight,
     numberOfLines,
     setAnimationDuration,
@@ -103,6 +105,7 @@ export default function StyleEditor({
     setWidth,
     text,
     verticalAlignment,
+    verticalAlignmentValue,
     width
   } = useStyleEditorContext();
 
@@ -210,7 +213,11 @@ export default function StyleEditor({
                 items={horizontalAlignmentOptions}
                 placeholder='Horizontal alignment'
                 value={horizontalAlignment}
-                onChange={setHorizontalAlignment}
+                onChange={alignment => {
+                  horizontalAlignmentValue.value = alignment ?? 'left'; // left is default
+                  setSliderProgress(0);
+                  setHorizontalAlignment(alignment);
+                }}
               />
             </View>
           </View>
@@ -221,7 +228,11 @@ export default function StyleEditor({
                 items={verticalAlignmentOptions}
                 placeholder='Vertical alignment'
                 value={verticalAlignment}
-                onChange={setVerticalAlignment}
+                onChange={alignment => {
+                  verticalAlignmentValue.value = alignment ?? 'top'; // top is default
+                  setSliderProgress(0);
+                  setVerticalAlignment(alignment);
+                }}
               />
             </View>
           </View>
@@ -284,7 +295,11 @@ export default function StyleEditor({
               <View style={styles.subSection}>
                 <Text style={styles.subSectionLabel}>progress</Text>
                 <View style={styles.sectionInput}>
-                  <SliderInput progress={animationProgress} />
+                  <SliderInput
+                    progress={animationProgress}
+                    value={sliderProgress}
+                    onComplete={setSliderProgress}
+                  />
                 </View>
               </View>
             </Animated.View>
