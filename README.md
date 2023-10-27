@@ -72,6 +72,8 @@ const styles = StyleSheet.create({
 });
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### Properties
 
 The `ResponsiveText` component accepts all the properties available to the `Text`` component from React Native Skia, while also introducing additional features. These include the ability to adjust text alignment, set the number of lines, and the ellipsize mode, among others.
@@ -106,6 +108,8 @@ type AnimationSettings = {
 
 \*\*animationProgress allows animating text based on custom progress value (e.g. when the user scrolls some content, opens the bottom sheet, etc.). It makes it easy to animate text in sync with another animation.
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### Animated properties
 
 `ResponsiveText` accepts reanimated [shared values](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/glossary#shared-value) for some of its properties. This makes it possible to update these values without having to re-render the component or create smooth animations of these properties.
@@ -134,6 +138,8 @@ When `animationSettings` are specified, every change of `ResponsiveText` propert
 
 https://github.com/MatiPl01/react-native-skia-responsive-text/assets/52978053/2ae0fb10-8e28-4090-9854-39df69fa1e48
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### Progress based animations
 
 Progress based animations are the alternative way to animate text. Instead of passing `animationSettings` property, you have to pass the `animationProgress` which is a reanimated shared value indicating the current transition progress.
@@ -149,6 +155,8 @@ To create smooth text animations, you have to follow these rules:
 3. Ensure that the `animationProgress` value is set to `0` before you start updating the progress (to start the animation from the current text position).
 
 #### Example
+
+https://github.com/MatiPl01/react-native-skia-responsive-text/assets/52978053/898a5aa3-0465-4292-909b-372337f4c67b
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
