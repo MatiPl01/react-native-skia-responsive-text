@@ -40,7 +40,13 @@ type ResponsiveTextProps = PartialBy<TextProps, 'x' | 'y'> & {
     | { animationSettings?: AnimationSettings }
   );
 
+type ResponsiveTextPrivateProps = ResponsiveTextProps & {
+  animationProgress?: SharedValue<number>;
+  animationSettings?: AnimationSettings;
+};
+
 function ResponsiveText({
+  animationSettings: animationSettingsProp,
   backgroundColor: backgroundColorProp = 'transparent',
   children,
   ellipsizeMode,
@@ -56,11 +62,21 @@ function ResponsiveText({
   x = 0,
   y = 0,
   ...rest
-}: ResponsiveTextProps) {
+}: ResponsiveTextPrivateProps) {
   const fontSize = font.getSize();
+
+  // Update animation settings if they are provided
+  const animationSettings = useMemo(() => {
+    if (!animationSettingsProp) return undefined;
+    const { duration, easing, onComplete } = animationSettingsProp;
+    if (!duration && !easing) return undefined;
+    if (!duration) return { easing, onComplete };
+    if (!easing) return { duration, onComplete };
+    return { duration, easing, onComplete };
+  }, [animationSettingsProp]);
+
   // Create shared values from animatable props
   const backgroundColor = useAnimatableValue(backgroundColorProp);
-
   const lineHeight = useAnimatableValue(
     lineHeightProp ?? LINE_HEIGHT_MULTIPLIER * fontSize
   );
@@ -123,6 +139,7 @@ function ResponsiveText({
       {textLines.map((line, i) => (
         <TextLine
           {...rest}
+          animationSettings={animationSettings}
           font={font}
           fontSize={fontSize}
           horizontalAlignmentOffsets={horizontalAlignmentOffsets}
@@ -138,4 +155,6 @@ function ResponsiveText({
   );
 }
 
-export default memo(ResponsiveText);
+export default memo(ResponsiveText) as (
+  props: ResponsiveTextProps
+) => JSX.Element;

@@ -2,6 +2,7 @@ import { Canvas, SkFont } from '@shopify/react-native-skia';
 import { PropsWithChildren } from 'react';
 import { StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { ResponsiveText } from 'react-native-skia-responsive-text';
+import { EASING } from 'src/constants';
 import { useStyleEditorContext } from 'src/context';
 
 type PreviewContainerProps = PropsWithChildren<{
@@ -50,6 +51,11 @@ export default function TextPreview({
   setCanvasDimensions
 }: TextPreviewProps) {
   const {
+    animationDuration,
+    animationEasing,
+    animationProgress,
+    backgroundColor,
+    color,
     ellipsizeMode,
     height,
     horizontalAlignment,
@@ -72,7 +78,8 @@ export default function TextPreview({
             style={[
               styles.previewText,
               {
-                color: 'white',
+                backgroundColor,
+                color,
                 fontSize,
                 height,
                 lineHeight,
@@ -99,7 +106,9 @@ export default function TextPreview({
             setCanvasDimensions({ height: layout.height, width: layout.width });
           }}>
           <ResponsiveText
-            color='white'
+            animationProgress={animationProgress}
+            backgroundColor={backgroundColor}
+            color={color}
             ellipsizeMode={ellipsizeMode}
             font={font}
             height={height}
@@ -111,6 +120,14 @@ export default function TextPreview({
             width={width}
             x={previewInnerPadding}
             y={previewInnerPadding}
+            animationSettings={
+              animationDuration || animationEasing
+                ? {
+                    duration: animationDuration,
+                    easing: animationEasing && EASING[animationEasing]
+                  }
+                : undefined
+            }
           />
         </Canvas>
       </PreviewContainer>

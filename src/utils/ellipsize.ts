@@ -95,16 +95,19 @@ export const trimLineCenter = (
   let lineWidth = firstHalfWidth + secondHalfWidth + font.getTextWidth(infix);
   while (lineWidth > width) {
     if (firstHalfWidth > secondHalfWidth) {
-      firstHalfWidth -= font.getTextWidth(line.text[--firstHalfIndex]!);
+      const delta = font.getTextWidth(line.text[--firstHalfIndex]!);
+      firstHalfWidth -= delta;
+      lineWidth -= delta;
     } else {
-      secondHalfWidth -= font.getTextWidth(line.text[++secondHalfIndex]!);
+      const delta = font.getTextWidth(line.text[++secondHalfIndex]!);
+      secondHalfWidth -= delta;
+      lineWidth -= delta;
     }
-    lineWidth = firstHalfWidth + secondHalfWidth + font.getTextWidth(infix);
   }
 
   const text = `${line.text
     .slice(0, firstHalfIndex)
-    .trimEnd()}${infix}${line.text.slice(secondHalfIndex).trimStart()}`;
+    .trimEnd()}${infix}${line.text.slice(secondHalfIndex + 1).trimStart()}`;
 
   return {
     text,

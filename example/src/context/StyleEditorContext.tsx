@@ -1,19 +1,35 @@
 import { createContext, useCallback, useContext, useState } from 'react';
+import { SharedValue } from 'react-native-reanimated';
 import {
   EllipsizeMode,
   HorizontalAlignment,
   VerticalAlignment
 } from 'react-native-skia-responsive-text';
+import { EASING } from 'src/constants';
 
 const DEFAULT_TEXT =
   'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Error magnam similique nemo!';
 
 type StyleEditorContextType = {
+  animationDuration: number | undefined;
+  animationEasing: keyof typeof EASING | undefined;
+  animationProgress: SharedValue<number> | undefined;
+  backgroundColor: string | undefined;
+  color: string | undefined;
   ellipsizeMode: EllipsizeMode | undefined;
   height: number | undefined;
   horizontalAlignment: HorizontalAlignment | undefined;
   lineHeight: number | undefined;
   numberOfLines: number | undefined;
+  setAnimationDuration: (animationDuration: number | undefined) => void;
+  setAnimationEasing: (
+    animationEasing: keyof typeof EASING | undefined
+  ) => void;
+  setAnimationProgress: (
+    animationProgress: SharedValue<number> | undefined
+  ) => void;
+  setBackgroundColor: (backgroundColor: string | undefined) => void;
+  setColor: (color: string | undefined) => void;
   setEllipsizeMode: (ellipsizeMode: EllipsizeMode | undefined) => void;
   setHeight: (height: number | undefined) => void;
   setHorizontalAlignment: (
@@ -63,6 +79,17 @@ export function StyleEditorProvider({
   >();
   const [width, setWidth] = useState<number | undefined>();
   const [height, setHeight] = useState<number | undefined>();
+  const [animationDuration, setAnimationDuration] = useState<
+    number | undefined
+  >();
+  const [animationEasing, setAnimationEasing] = useState<
+    keyof typeof EASING | undefined
+  >();
+  const [color, setColor] = useState<string | undefined>();
+  const [backgroundColor, setBackgroundColor] = useState<string | undefined>();
+  const [animationProgress, setAnimationProgress] = useState<
+    SharedValue<number> | undefined
+  >();
 
   const [text, setText] = useState(DEFAULT_TEXT);
 
@@ -71,11 +98,21 @@ export function StyleEditorProvider({
   }, []);
 
   const contextValue: StyleEditorContextType = {
+    animationDuration,
+    animationEasing,
+    animationProgress,
+    backgroundColor,
+    color,
     ellipsizeMode,
     height,
     horizontalAlignment,
     lineHeight,
     numberOfLines,
+    setAnimationDuration,
+    setAnimationEasing,
+    setAnimationProgress,
+    setBackgroundColor,
+    setColor,
     setEllipsizeMode,
     setHeight,
     setHorizontalAlignment,

@@ -1,12 +1,23 @@
+import { useState } from 'react';
 import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
+// eslint-disable-next-line import/default
+import Animated, { FadeIn, useSharedValue } from 'react-native-reanimated';
 import {
   EllipsizeMode,
   HorizontalAlignment,
   VerticalAlignment
 } from 'react-native-skia-responsive-text';
+import { EASING } from 'src/constants';
 import { useStyleEditorContext } from 'src/context';
+import { AnimationType } from 'src/types';
 
-import { NumberInput, SelectInput, TextInput } from './input';
+import {
+  ColorSelector,
+  NumberInput,
+  SelectInput,
+  SliderInput,
+  TextInput
+} from './input';
 
 const horizontalAlignmentOptions: Array<{
   label: HorizontalAlignment;
@@ -38,6 +49,23 @@ const ellipsizeModeOptions: Array<{
   { label: 'clip', value: 'clip' }
 ];
 
+const animationTypeOptions: Array<{
+  label: string;
+  value: AnimationType;
+}> = [
+  { label: 'none', value: 'none' },
+  { label: 'Progress-based', value: 'progress' },
+  { label: 'Timing-based', value: 'timing' }
+];
+
+const easingOptions: Array<{
+  label: keyof typeof EASING;
+  value: keyof typeof EASING;
+}> = Object.keys(EASING).map(key => ({
+  label: key as keyof typeof EASING,
+  value: key as keyof typeof EASING
+}));
+
 type StyleEditorProps = {
   canvasDimensions: { height: number; width: number };
   previewInnerPadding: number;
@@ -47,12 +75,24 @@ export default function StyleEditor({
   canvasDimensions,
   previewInnerPadding
 }: StyleEditorProps) {
+  const [animationType, setAnimationType] = useState<AnimationType>('none');
+  const animationProgress = useSharedValue(0);
+
   const {
+    animationDuration,
+    animationEasing,
+    backgroundColor,
+    color,
     ellipsizeMode,
     height,
     horizontalAlignment,
     lineHeight,
     numberOfLines,
+    setAnimationDuration,
+    setAnimationEasing,
+    setAnimationProgress,
+    setBackgroundColor,
+    setColor,
     setEllipsizeMode,
     setHeight,
     setHorizontalAlignment,
@@ -105,50 +145,32 @@ export default function StyleEditor({
         </View>
 
         <View style={styles.sectionGroup}>
-          <Text style={styles.sectionLabel}>Alignment</Text>
-          <View style={styles.subSection}>
-            <Text style={styles.subSectionLabel}>horizontal</Text>
-            <SelectInput
-              items={horizontalAlignmentOptions}
-              placeholder='Horizontal alignment'
-              value={horizontalAlignment}
-              onChange={setHorizontalAlignment}
-            />
-          </View>
-          <View style={styles.subSection}>
-            <Text style={styles.subSectionLabel}>vertical</Text>
-            <SelectInput
-              items={verticalAlignmentOptions}
-              placeholder='Vertical alignment'
-              value={verticalAlignment}
-              onChange={setVerticalAlignment}
-            />
-          </View>
-        </View>
-
-        <View style={styles.sectionGroup}>
           <Text style={styles.sectionLabel}>Dimensions</Text>
           <View style={styles.subSection}>
             <Text style={styles.subSectionLabel}>width</Text>
-            <NumberInput
-              longPressStep={5}
-              max={maxWidth}
-              min={0}
-              placeholder='Width'
-              value={width}
-              onChange={setWidth}
-            />
+            <View style={styles.sectionInput}>
+              <NumberInput
+                longPressStep={5}
+                max={maxWidth}
+                min={0}
+                placeholder='Width'
+                value={width}
+                onChange={setWidth}
+              />
+            </View>
           </View>
           <View style={styles.subSection}>
             <Text style={styles.subSectionLabel}>height</Text>
-            <NumberInput
-              longPressStep={5}
-              max={maxHeight}
-              min={0}
-              placeholder='Height'
-              value={height}
-              onChange={setHeight}
-            />
+            <View style={styles.sectionInput}>
+              <NumberInput
+                longPressStep={5}
+                max={maxHeight}
+                min={0}
+                placeholder='Height'
+                value={height}
+                onChange={setHeight}
+              />
+            </View>
           </View>
         </View>
 
@@ -168,12 +190,128 @@ export default function StyleEditor({
           </View>
           <View style={styles.subSection}>
             <Text style={styles.subSectionLabel}>ellipsizeMode</Text>
-            <SelectInput
-              items={ellipsizeModeOptions}
-              placeholder='Ellipsize mode'
-              value={ellipsizeMode}
-              onChange={setEllipsizeMode}
-            />
+            <View style={styles.sectionInput}>
+              <SelectInput
+                items={ellipsizeModeOptions}
+                placeholder='Ellipsize mode'
+                value={ellipsizeMode}
+                onChange={setEllipsizeMode}
+              />
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.sectionGroup}>
+          <Text style={styles.sectionLabel}>Alignment</Text>
+          <View style={styles.subSection}>
+            <Text style={styles.subSectionLabel}>horizontal</Text>
+            <View style={styles.sectionInput}>
+              <SelectInput
+                items={horizontalAlignmentOptions}
+                placeholder='Horizontal alignment'
+                value={horizontalAlignment}
+                onChange={setHorizontalAlignment}
+              />
+            </View>
+          </View>
+          <View style={styles.subSection}>
+            <Text style={styles.subSectionLabel}>vertical</Text>
+            <View style={styles.sectionInput}>
+              <SelectInput
+                items={verticalAlignmentOptions}
+                placeholder='Vertical alignment'
+                value={verticalAlignment}
+                onChange={setVerticalAlignment}
+              />
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.sectionGroup}>
+          <Text style={styles.sectionLabel}>Alignment change animation</Text>
+          <View style={styles.subSection}>
+            <Text style={styles.sectionLabel}>Animation type</Text>
+            <View style={styles.sectionInput}>
+              <SelectInput
+                items={animationTypeOptions}
+                placeholder='Animation type'
+                value={animationType}
+                onChange={value => {
+                  if (value !== 'timing') {
+                    setAnimationDuration(undefined);
+                    setAnimationEasing(undefined);
+                  }
+                  setAnimationProgress(
+                    value === 'progress' ? animationProgress : undefined
+                  );
+                  setAnimationType(value);
+                }}
+              />
+            </View>
+          </View>
+
+          {animationType === 'timing' && (
+            <Animated.View entering={FadeIn} style={styles.sectionGroup}>
+              <View style={styles.subSection}>
+                <Text style={styles.subSectionLabel}>duration</Text>
+                <View style={styles.sectionInput}>
+                  <NumberInput
+                    max={1000}
+                    min={100}
+                    placeholder='Duration (ms)'
+                    step={50}
+                    value={animationDuration}
+                    onChange={setAnimationDuration}
+                  />
+                </View>
+              </View>
+              <View style={styles.subSection}>
+                <Text style={styles.subSectionLabel}>easing</Text>
+                <View style={styles.sectionInput}>
+                  <SelectInput
+                    items={easingOptions}
+                    placeholder='Easing'
+                    value={animationEasing}
+                    onChange={setAnimationEasing}
+                  />
+                </View>
+              </View>
+            </Animated.View>
+          )}
+
+          {animationType === 'progress' && (
+            <Animated.View entering={FadeIn} style={styles.sectionGroup}>
+              <View style={styles.subSection}>
+                <Text style={styles.subSectionLabel}>progress</Text>
+                <View style={styles.sectionInput}>
+                  <SliderInput progress={animationProgress} />
+                </View>
+              </View>
+            </Animated.View>
+          )}
+        </View>
+
+        <View style={styles.sectionGroup}>
+          <Text style={styles.sectionLabel}>Colors</Text>
+          <View style={styles.subSection}>
+            <Text style={styles.subSectionLabel}>text</Text>
+            <View style={styles.sectionInput}>
+              <ColorSelector
+                label='Text color'
+                value={color}
+                onChange={setColor}
+              />
+            </View>
+          </View>
+          <View style={styles.subSection}>
+            <Text style={styles.subSectionLabel}>background</Text>
+            <View style={styles.sectionInput}>
+              <ColorSelector
+                label='Background color'
+                value={backgroundColor}
+                onChange={setBackgroundColor}
+              />
+            </View>
           </View>
         </View>
       </View>
