@@ -12,8 +12,7 @@ export enum AppStackScreen {
 
 type AppStackParamList = Record<AppStackScreen, undefined>;
 
-export type AppStackNavigationProp =
-  NativeStackNavigationProp<AppStackParamList>;
+type AppStackNavigationProp = NativeStackNavigationProp<AppStackParamList>;
 
 export function useAppStackNavigation() {
   return useNavigation<AppStackNavigationProp>();
