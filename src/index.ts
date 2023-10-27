@@ -1,4 +1,4 @@
-export { ResponsiveText } from './components';
+import { ResponsiveText } from './components';
 export type {
   AnimatableProps,
   AnimatableValue,
@@ -7,3 +7,4 @@ export type {
   HorizontalAlignment,
   VerticalAlignment
 } from './types';
+export default ResponsiveText;

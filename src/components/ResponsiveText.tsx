@@ -24,13 +24,13 @@ const LINE_HEIGHT_MULTIPLIER = 1.5;
 
 type ResponsiveTextProps = PartialBy<TextProps, 'x' | 'y'> & {
   ellipsizeMode?: EllipsizeMode;
+  font: SkFont;
   height?: number;
   numberOfLines?: number;
   onMeasure?: (width: number, height: number) => void;
   width?: number;
 } & AnimatableProps<{
     backgroundColor?: string;
-    font: SkFont;
     horizontalAlignment?: HorizontalAlignment;
     lineHeight?: number;
     verticalAlignment?: VerticalAlignment;
