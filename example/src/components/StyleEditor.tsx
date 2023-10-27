@@ -7,7 +7,7 @@ import {
 import { EASING } from 'src/constants';
 import { useStyleEditorContext } from 'src/context';
 
-import { NumberInput, SelectInput, TextInput } from './input';
+import { ColorSelector, NumberInput, SelectInput, TextInput } from './input';
 
 const horizontalAlignmentOptions: Array<{
   label: HorizontalAlignment;
@@ -59,6 +59,8 @@ export default function StyleEditor({
   const {
     animationDuration,
     animationEasing,
+    backgroundColor,
+    color,
     ellipsizeMode,
     height,
     horizontalAlignment,
@@ -66,6 +68,8 @@ export default function StyleEditor({
     numberOfLines,
     setAnimationDuration,
     setAnimationEasing,
+    setBackgroundColor,
+    setColor,
     setEllipsizeMode,
     setHeight,
     setHorizontalAlignment,
@@ -121,25 +125,29 @@ export default function StyleEditor({
           <Text style={styles.sectionLabel}>Dimensions</Text>
           <View style={styles.subSection}>
             <Text style={styles.subSectionLabel}>width</Text>
-            <NumberInput
-              longPressStep={5}
-              max={maxWidth}
-              min={0}
-              placeholder='Width'
-              value={width}
-              onChange={setWidth}
-            />
+            <View style={styles.sectionInput}>
+              <NumberInput
+                longPressStep={5}
+                max={maxWidth}
+                min={0}
+                placeholder='Width'
+                value={width}
+                onChange={setWidth}
+              />
+            </View>
           </View>
           <View style={styles.subSection}>
             <Text style={styles.subSectionLabel}>height</Text>
-            <NumberInput
-              longPressStep={5}
-              max={maxHeight}
-              min={0}
-              placeholder='Height'
-              value={height}
-              onChange={setHeight}
-            />
+            <View style={styles.sectionInput}>
+              <NumberInput
+                longPressStep={5}
+                max={maxHeight}
+                min={0}
+                placeholder='Height'
+                value={height}
+                onChange={setHeight}
+              />
+            </View>
           </View>
         </View>
 
@@ -159,12 +167,14 @@ export default function StyleEditor({
           </View>
           <View style={styles.subSection}>
             <Text style={styles.subSectionLabel}>ellipsizeMode</Text>
-            <SelectInput
-              items={ellipsizeModeOptions}
-              placeholder='Ellipsize mode'
-              value={ellipsizeMode}
-              onChange={setEllipsizeMode}
-            />
+            <View style={styles.sectionInput}>
+              <SelectInput
+                items={ellipsizeModeOptions}
+                placeholder='Ellipsize mode'
+                value={ellipsizeMode}
+                onChange={setEllipsizeMode}
+              />
+            </View>
           </View>
         </View>
 
@@ -172,21 +182,25 @@ export default function StyleEditor({
           <Text style={styles.sectionLabel}>Alignment</Text>
           <View style={styles.subSection}>
             <Text style={styles.subSectionLabel}>horizontal</Text>
-            <SelectInput
-              items={horizontalAlignmentOptions}
-              placeholder='Horizontal alignment'
-              value={horizontalAlignment}
-              onChange={setHorizontalAlignment}
-            />
+            <View style={styles.sectionInput}>
+              <SelectInput
+                items={horizontalAlignmentOptions}
+                placeholder='Horizontal alignment'
+                value={horizontalAlignment}
+                onChange={setHorizontalAlignment}
+              />
+            </View>
           </View>
           <View style={styles.subSection}>
             <Text style={styles.subSectionLabel}>vertical</Text>
-            <SelectInput
-              items={verticalAlignmentOptions}
-              placeholder='Vertical alignment'
-              value={verticalAlignment}
-              onChange={setVerticalAlignment}
-            />
+            <View style={styles.sectionInput}>
+              <SelectInput
+                items={verticalAlignmentOptions}
+                placeholder='Vertical alignment'
+                value={verticalAlignment}
+                onChange={setVerticalAlignment}
+              />
+            </View>
           </View>
         </View>
 
@@ -205,15 +219,41 @@ export default function StyleEditor({
               />
             </View>
           </View>
+          <View style={styles.subSection}>
+            <Text style={styles.subSectionLabel}>easing</Text>
+            <View style={styles.sectionInput}>
+              <SelectInput
+                items={easingOptions}
+                placeholder='Easing'
+                value={animationEasing}
+                onChange={setAnimationEasing}
+              />
+            </View>
+          </View>
         </View>
-        <View style={styles.subSection}>
-          <Text style={styles.subSectionLabel}>easing</Text>
-          <SelectInput
-            items={easingOptions}
-            placeholder='Easing'
-            value={animationEasing}
-            onChange={setAnimationEasing}
-          />
+
+        <View style={styles.sectionGroup}>
+          <Text style={styles.sectionLabel}>Colors</Text>
+          <View style={styles.subSection}>
+            <Text style={styles.subSectionLabel}>text</Text>
+            <View style={styles.sectionInput}>
+              <ColorSelector
+                label='Text color'
+                value={color}
+                onChange={setColor}
+              />
+            </View>
+          </View>
+          <View style={styles.subSection}>
+            <Text style={styles.subSectionLabel}>background</Text>
+            <View style={styles.sectionInput}>
+              <ColorSelector
+                label='Background color'
+                value={backgroundColor}
+                onChange={setBackgroundColor}
+              />
+            </View>
+          </View>
         </View>
       </View>
     </ScrollView>

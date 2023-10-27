@@ -12,6 +12,8 @@ const DEFAULT_TEXT =
 type StyleEditorContextType = {
   animationDuration: number | undefined;
   animationEasing: keyof typeof EASING | undefined;
+  backgroundColor: string | undefined;
+  color: string | undefined;
   ellipsizeMode: EllipsizeMode | undefined;
   height: number | undefined;
   horizontalAlignment: HorizontalAlignment | undefined;
@@ -21,6 +23,8 @@ type StyleEditorContextType = {
   setAnimationEasing: (
     animationEasing: keyof typeof EASING | undefined
   ) => void;
+  setBackgroundColor: (backgroundColor: string | undefined) => void;
+  setColor: (color: string | undefined) => void;
   setEllipsizeMode: (ellipsizeMode: EllipsizeMode | undefined) => void;
   setHeight: (height: number | undefined) => void;
   setHorizontalAlignment: (
@@ -73,7 +77,11 @@ export function StyleEditorProvider({
   const [animationDuration, setAnimationDuration] = useState<
     number | undefined
   >();
-  const [animationEasing, setAnimationEasing] = useState<string | undefined>();
+  const [animationEasing, setAnimationEasing] = useState<
+    keyof typeof EASING | undefined
+  >();
+  const [color, setColor] = useState<string | undefined>();
+  const [backgroundColor, setBackgroundColor] = useState<string | undefined>();
 
   const [text, setText] = useState(DEFAULT_TEXT);
 
@@ -84,6 +92,8 @@ export function StyleEditorProvider({
   const contextValue: StyleEditorContextType = {
     animationDuration,
     animationEasing,
+    backgroundColor,
+    color,
     ellipsizeMode,
     height,
     horizontalAlignment,
@@ -91,6 +101,8 @@ export function StyleEditorProvider({
     numberOfLines,
     setAnimationDuration,
     setAnimationEasing,
+    setBackgroundColor,
+    setColor,
     setEllipsizeMode,
     setHeight,
     setHorizontalAlignment,

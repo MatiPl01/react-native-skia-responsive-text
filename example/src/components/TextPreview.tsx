@@ -53,6 +53,8 @@ export default function TextPreview({
   const {
     animationDuration,
     animationEasing,
+    backgroundColor,
+    color,
     ellipsizeMode,
     height,
     horizontalAlignment,
@@ -75,7 +77,8 @@ export default function TextPreview({
             style={[
               styles.previewText,
               {
-                color: 'white',
+                backgroundColor,
+                color,
                 fontSize,
                 height,
                 lineHeight,
@@ -102,7 +105,8 @@ export default function TextPreview({
             setCanvasDimensions({ height: layout.height, width: layout.width });
           }}>
           <ResponsiveText
-            color='white'
+            backgroundColor={backgroundColor}
+            color={color}
             ellipsizeMode={ellipsizeMode}
             font={font}
             height={height}
