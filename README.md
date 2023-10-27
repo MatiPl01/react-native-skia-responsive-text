@@ -132,8 +132,6 @@ When `animationSettings` are specified, every change of `ResponsiveText` propert
 
 **Example**
 
-![video](./docs/time-based-animations.mp4)
-
 ### Progress based animations
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
