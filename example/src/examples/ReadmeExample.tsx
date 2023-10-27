@@ -14,9 +14,8 @@ import {
   SafeAreaView,
   useSafeAreaInsets
 } from 'react-native-safe-area-context';
-import {
+import ResponsiveText, {
   HorizontalAlignment,
-  ResponsiveText,
   VerticalAlignment
 } from 'react-native-skia-responsive-text';
 

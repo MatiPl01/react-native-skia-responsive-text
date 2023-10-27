@@ -28,7 +28,10 @@ const wrapWithoutTrimmingFromStart = (
     currentLine = { chunks: [], width: 0 };
   };
 
+  const shouldBreak = () => result.length === maxLines;
+
   for (let i = 0; i < chunks.length; i++) {
+    if (shouldBreak()) break;
     const chunk = chunks[i]!;
     const chunkWidth = nextChunkWidth;
     const nextChunk = chunks[i + 1];
@@ -49,6 +52,10 @@ const wrapWithoutTrimmingFromStart = (
     }
     // Otherwise, if the chunk is a single word, break it
     else {
+      if (currentLine.chunks.length && result.length < maxLines - 1) {
+        addNewLine();
+      }
+
       let j = 0;
       let k = 1;
       let nextSliceWidth = font.getTextWidth(chunk.slice(j, k));
@@ -59,9 +66,7 @@ const wrapWithoutTrimmingFromStart = (
           currentLine.chunks.push(slice);
           currentLine.width += font.getTextWidth(slice);
           if (k < chunk.length) addNewLine();
-          if (result.length === maxLines) {
-            break;
-          }
+          if (shouldBreak()) break;
           j = k;
         }
         nextSliceWidth = font.getTextWidth(chunk.slice(j, k + 1));
@@ -70,7 +75,7 @@ const wrapWithoutTrimmingFromStart = (
   }
 
   // If the last line is not empty, add it to the result
-  if (currentLine.chunks.length) {
+  if (currentLine.chunks.length && !shouldBreak()) {
     addNewLine();
   }
 
@@ -100,7 +105,10 @@ const wrapWithoutTrimmingFromEnd = (
     currentLine = { chunks: [], width: 0 };
   };
 
+  const shouldBreak = () => result.length === maxLines;
+
   for (let i = chunks.length - 1; i >= 0; i--) {
+    if (shouldBreak()) break;
     const chunk = chunks[i]!;
     const chunkWidth = nextChunkWidth;
     const nextChunk = chunks[i - 1];
@@ -121,6 +129,10 @@ const wrapWithoutTrimmingFromEnd = (
     }
     // Otherwise, if the chunk is a single word, break it
     else {
+      if (currentLine.chunks.length && result.length < maxLines - 1) {
+        addNewLine();
+      }
+
       let j = chunk.length;
       let k = j - 1;
       let nextSliceWidth = font.getTextWidth(chunk.slice(k, j));
@@ -131,9 +143,7 @@ const wrapWithoutTrimmingFromEnd = (
           currentLine.chunks.push(slice);
           currentLine.width += font.getTextWidth(slice);
           if (k > 0) addNewLine();
-          if (result.length === maxLines) {
-            break;
-          }
+          if (shouldBreak()) break;
           j = k;
         }
         nextSliceWidth = font.getTextWidth(chunk.slice(k - 1, j));
@@ -142,7 +152,7 @@ const wrapWithoutTrimmingFromEnd = (
   }
 
   // If the last line is not empty, add it to the result
-  if (currentLine.chunks.length) {
+  if (currentLine.chunks.length && !shouldBreak()) {
     addNewLine();
   }
 
@@ -235,6 +245,12 @@ const wrapWithMiddleTrimming = (
     width,
     halfLines + 1
   );
+
+  console.log({
+    halfLines,
+    withoutFromEnd,
+    withoutFromStart
+  });
 
   if (numberOfLines % 2 === 0) {
     return [
