@@ -10,6 +10,7 @@ enum RepeatAction {
 }
 
 type NumberInputProps = {
+  longPressStep?: number;
   max?: number;
   min?: number;
   onChange: (value: number | undefined) => void;
@@ -19,6 +20,7 @@ type NumberInputProps = {
 };
 
 export default function NumberInput({
+  longPressStep,
   max = 100,
   min = 0,
   onChange,
@@ -50,32 +52,45 @@ export default function NumberInput({
     }
   };
 
-  const handleIncrement = useCallback(() => {
-    setValue(oldValue => {
-      const newValue = Math.min(oldValue ? oldValue + step : min, max);
-      onChange?.(newValue);
-      return newValue;
-    });
-  }, [onChange]);
+  const handleIncrement = useCallback(
+    (s: number) => {
+      setValue(oldValue => {
+        const newValue = Math.min(
+          !isNaN(oldValue as number) ? (oldValue as number) + s : min,
+          max
+        );
+        onChange?.(newValue);
+        return newValue;
+      });
+    },
+    [onChange, step, min, max]
+  );
 
-  const handleDecrement = useCallback(() => {
-    setValue(oldValue => {
-      const newValue = Math.max(oldValue ? oldValue - step : max, min);
-      onChange?.(newValue);
-      return newValue;
-    });
-  }, [onChange]);
+  const handleDecrement = useCallback(
+    (s: number) => {
+      setValue(oldValue => {
+        const newValue = Math.max(
+          !isNaN(oldValue as number) ? (oldValue as number) - s : max,
+          min
+        );
+        onChange?.(newValue);
+        return newValue;
+      });
+    },
+    [onChange, step, min, max]
+  );
 
   useEffect(() => {
     if (repeatedAction === null) return;
     const interval = setInterval(
-      repeatedAction === RepeatAction.Decrement
-        ? handleDecrement
-        : handleIncrement,
+      () =>
+        repeatedAction === RepeatAction.Decrement
+          ? handleDecrement(longPressStep ?? step)
+          : handleIncrement(longPressStep ?? step),
       100
     );
     return () => clearInterval(interval);
-  }, [repeatedAction, handleDecrement, handleIncrement]);
+  }, [repeatedAction, handleDecrement, handleIncrement, step, longPressStep]);
 
   useEffect(() => {
     setValue(valueProp);
@@ -84,33 +99,29 @@ export default function NumberInput({
   return (
     <View style={styles.wrapper}>
       <TouchableOpacity
-        style={styles.button}
-        onPress={handleDecrement}
-        onPressOut={() => setRepeatedAction(null)}
-        onLongPress={() => {
-          setTimeout(() => {
-            setRepeatedAction(RepeatAction.Decrement);
-          }, 0);
-        }}>
+        disabled={value === min}
+        style={[styles.button, { opacity: value === min ? 0.5 : 1 }]}
+        onLongPress={() => setRepeatedAction(RepeatAction.Decrement)}
+        onPress={() => handleDecrement(step)}
+        onPressOut={() => setRepeatedAction(null)}>
         <Text style={styles.buttonText}>-</Text>
       </TouchableOpacity>
-      <TextInput
-        keyboardType='number-pad'
-        placeholder={placeholder}
-        value={value?.toString()}
-        onChangeText={handleChange}
-        onClear={() => handleChange('')}
-        onFocus={() => setRepeatedAction(null)}
-      />
+      <View style={styles.inputWrapper}>
+        <TextInput
+          keyboardType='number-pad'
+          placeholder={placeholder}
+          value={value?.toString()}
+          onChangeText={handleChange}
+          onClear={() => handleChange('')}
+          onFocus={() => setRepeatedAction(null)}
+        />
+      </View>
       <TouchableOpacity
-        style={styles.button}
-        onPress={handleIncrement}
-        onPressOut={() => setRepeatedAction(null)}
-        onLongPress={() =>
-          setTimeout(() => {
-            setRepeatedAction(RepeatAction.Increment);
-          }, 0)
-        }>
+        disabled={value === max}
+        style={[styles.button, { opacity: value === max ? 0.5 : 1 }]}
+        onLongPress={() => setRepeatedAction(RepeatAction.Increment)}
+        onPress={() => handleIncrement(step)}
+        onPressOut={() => setRepeatedAction(null)}>
         <Text style={styles.buttonText}>+</Text>
       </TouchableOpacity>
     </View>
@@ -132,8 +143,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold'
   },
+  inputWrapper: {
+    flexGrow: 1,
+    flexShrink: 1
+  },
   wrapper: {
     flexDirection: 'row',
+    flexGrow: 1,
+    flexShrink: 1,
     gap: 5,
     height: INPUT_FIELD_HEIGHT
   }

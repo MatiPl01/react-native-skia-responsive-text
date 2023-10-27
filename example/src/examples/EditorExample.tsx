@@ -6,6 +6,7 @@ import {
   useFont
 } from '@shopify/react-native-skia';
 import { FontSource, useFonts } from 'expo-font';
+import { useState } from 'react';
 import {
   Dimensions,
   KeyboardAvoidingView,
@@ -31,6 +32,11 @@ export default function EditorExample() {
     'Poppins-Regular': FONT
   });
 
+  const [canvasDimensions, setCanvasDimensions] = useState({
+    height: 0,
+    width: 0
+  });
+
   if (!fontsLoaded) {
     return null;
   }
@@ -43,6 +49,9 @@ export default function EditorExample() {
     );
   }
 
+  const previewHeight = 0.2 * height;
+  const previewInnerPadding = 0.025 * width;
+
   return (
     <KeyboardAvoidingView style={styles.fill}>
       <StyleEditorProvider>
@@ -50,18 +59,27 @@ export default function EditorExample() {
           <Canvas style={StyleSheet.absoluteFill}>
             <Rect height={height} width={width}>
               <LinearGradient
-                colors={['#16546c', '#5d0967']}
+                colors={['#40C9FF', '#E81CFF']}
                 end={{ x: width, y: height }}
-                positions={[0, 0.75]}
+                positions={[0, 0.5]}
                 start={{ x: 0, y: 0 }}
               />
             </Rect>
           </Canvas>
-          <SafeAreaView>
+          <SafeAreaView style={styles.fill}>
             {/* Text preview */}
-            <TextPreview font={font} fontSize={fontSize} />
+            <TextPreview
+              font={font}
+              fontSize={fontSize}
+              previewHeight={previewHeight}
+              previewInnerPadding={previewInnerPadding}
+              setCanvasDimensions={setCanvasDimensions}
+            />
             {/* Style editor */}
-            <StyleEditor />
+            <StyleEditor
+              canvasDimensions={canvasDimensions}
+              previewInnerPadding={previewInnerPadding}
+            />
           </SafeAreaView>
         </View>
       </StyleEditorProvider>
