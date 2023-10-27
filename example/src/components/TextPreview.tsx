@@ -50,9 +50,11 @@ export default function TextPreview({
   setCanvasDimensions
 }: TextPreviewProps) {
   const {
+    ellipsizeMode,
     height,
     horizontalAlignment,
     lineHeight,
+    numberOfLines,
     text,
     verticalAlignment,
     width
@@ -65,6 +67,8 @@ export default function TextPreview({
         <View
           style={[styles.previewContainer, { padding: previewInnerPadding }]}>
           <Text
+            ellipsizeMode={ellipsizeMode}
+            numberOfLines={numberOfLines}
             style={[
               styles.previewText,
               {
@@ -96,10 +100,12 @@ export default function TextPreview({
           }}>
           <ResponsiveText
             color='white'
+            ellipsizeMode={ellipsizeMode}
             font={font}
             height={height}
             horizontalAlignment={horizontalAlignment}
             lineHeight={lineHeight}
+            numberOfLines={numberOfLines}
             text={text}
             verticalAlignment={verticalAlignment}
             width={width}
