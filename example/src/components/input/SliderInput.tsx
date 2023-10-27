@@ -5,11 +5,13 @@ import { SharedValue } from 'react-native-reanimated';
 type SliderInputProps = {
   onComplete?: (value: number) => void;
   progress: SharedValue<number>;
+  value: number;
 };
 
-function SliderInput({ onComplete, progress }: SliderInputProps) {
+function SliderInput({ onComplete, progress, value }: SliderInputProps) {
   return (
     <Slider
+      value={value}
       onSlidingComplete={() => {
         onComplete?.(progress.value);
       }}

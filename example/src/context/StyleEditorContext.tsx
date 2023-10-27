@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useState } from 'react';
-import { SharedValue } from 'react-native-reanimated';
+import { SharedValue, useSharedValue } from 'react-native-reanimated';
 import {
   EllipsizeMode,
   HorizontalAlignment,
@@ -19,6 +19,7 @@ type StyleEditorContextType = {
   ellipsizeMode: EllipsizeMode | undefined;
   height: number | undefined;
   horizontalAlignment: HorizontalAlignment | undefined;
+  horizontalAlignmentValue: SharedValue<HorizontalAlignment>;
   lineHeight: number | undefined;
   numberOfLines: number | undefined;
   setAnimationDuration: (animationDuration: number | undefined) => void;
@@ -44,6 +45,7 @@ type StyleEditorContextType = {
   setWidth: (width: number | undefined) => void;
   text: string;
   verticalAlignment: VerticalAlignment | undefined;
+  verticalAlignmentValue: SharedValue<VerticalAlignment>;
   width: number | undefined;
 };
 
@@ -91,6 +93,9 @@ export function StyleEditorProvider({
     SharedValue<number> | undefined
   >();
 
+  const horizontalAlignmentValue = useSharedValue<HorizontalAlignment>('left');
+  const verticalAlignmentValue = useSharedValue<VerticalAlignment>('top');
+
   const [text, setText] = useState(DEFAULT_TEXT);
 
   const handleSetText = useCallback((newText: string | undefined) => {
@@ -106,6 +111,7 @@ export function StyleEditorProvider({
     ellipsizeMode,
     height,
     horizontalAlignment,
+    horizontalAlignmentValue,
     lineHeight,
     numberOfLines,
     setAnimationDuration,
@@ -123,6 +129,7 @@ export function StyleEditorProvider({
     setWidth,
     text,
     verticalAlignment,
+    verticalAlignmentValue,
     width
   };
 
