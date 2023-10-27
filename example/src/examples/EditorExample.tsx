@@ -8,10 +8,10 @@ import {
 import { FontSource, useFonts } from 'expo-font';
 import { useState } from 'react';
 import {
-  Dimensions,
   KeyboardAvoidingView,
   StyleSheet,
   Text,
+  useWindowDimensions,
   View
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -23,7 +23,7 @@ const FONT = require('../../assets/Poppins-Regular.ttf') as FontSource &
   DataSourceParam;
 
 export default function EditorExample() {
-  const { height, width } = Dimensions.get('screen');
+  const { height, width } = useWindowDimensions();
 
   const fontSize = 16;
 
@@ -66,21 +66,19 @@ export default function EditorExample() {
               />
             </Rect>
           </Canvas>
-          <SafeAreaView style={styles.fill}>
-            {/* Text preview */}
-            <TextPreview
-              font={font}
-              fontSize={fontSize}
-              previewHeight={previewHeight}
-              previewInnerPadding={previewInnerPadding}
-              setCanvasDimensions={setCanvasDimensions}
-            />
-            {/* Style editor */}
-            <StyleEditor
-              canvasDimensions={canvasDimensions}
-              previewInnerPadding={previewInnerPadding}
-            />
-          </SafeAreaView>
+          {/* Text preview */}
+          <TextPreview
+            font={font}
+            fontSize={fontSize}
+            previewHeight={previewHeight}
+            previewInnerPadding={previewInnerPadding}
+            setCanvasDimensions={setCanvasDimensions}
+          />
+          {/* Style editor */}
+          <StyleEditor
+            canvasDimensions={canvasDimensions}
+            previewInnerPadding={previewInnerPadding}
+          />
         </View>
       </StyleEditorProvider>
     </KeyboardAvoidingView>

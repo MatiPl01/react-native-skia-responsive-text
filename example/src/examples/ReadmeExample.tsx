@@ -7,13 +7,10 @@ import {
   Shadow,
   useFont
 } from '@shopify/react-native-skia';
-import { useEffect } from 'react';
-import { StyleSheet, Text, useWindowDimensions } from 'react-native';
+import { useEffect, useState } from 'react';
+import { StyleSheet, Text } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
-import {
-  SafeAreaView,
-  useSafeAreaInsets
-} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import ResponsiveText, {
   HorizontalAlignment,
   VerticalAlignment
@@ -39,8 +36,10 @@ export default function ReadmeExample() {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-var-requires
   const font = useFont(require('../../assets/Poppins-Regular.ttf'), fontSize);
 
-  const dimensions = useWindowDimensions();
-  const insets = useSafeAreaInsets();
+  const [{ height, width }, setDimensions] = useState({
+    height: 0,
+    width: 0
+  });
 
   const horizontalAlignment = useSharedValue<HorizontalAlignment>('left');
   const verticalAlignment = useSharedValue<VerticalAlignment>('top');
@@ -66,18 +65,22 @@ export default function ReadmeExample() {
     );
   }
 
-  const fullHeight = dimensions.height + insets.top;
-  const fullWidth = dimensions.width;
-
-  const size = 0.75 * Math.min(fullHeight, fullWidth);
+  const size = 0.75 * Math.min(width, height);
   const padding = 10;
 
   return (
-    <Canvas style={styles.fill}>
-      <Rect height={fullHeight} width={fullWidth}>
+    <Canvas
+      style={styles.fill}
+      onLayout={({ nativeEvent: { layout } }) =>
+        setDimensions({
+          height: layout.height,
+          width: layout.width
+        })
+      }>
+      <Rect height={height} width={width}>
         <LinearGradient
           colors={['#40C9FF', '#E81CFF']}
-          end={{ x: fullWidth, y: fullHeight }}
+          end={{ x: width, y: height }}
           positions={[0, 0.75]}
           start={{ x: 0, y: 0 }}
         />
@@ -87,8 +90,8 @@ export default function ReadmeExample() {
         height={size + 2 * padding}
         r={25}
         width={size + 2 * padding}
-        x={(fullWidth - size) / 2 - padding}
-        y={(fullHeight - size) / 2 - padding}></RoundedRect>
+        x={(width - size) / 2 - padding}
+        y={(height - size) / 2 - padding}></RoundedRect>
       <ResponsiveText
         animationSettings={{ duration: 300 }}
         color='white'
@@ -99,8 +102,8 @@ export default function ReadmeExample() {
         text='Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione dignissimos obcaecati, maiores odio modi suscipit adipisci officiis laudantium at doloremque.'
         verticalAlignment={verticalAlignment}
         width={size}
-        x={(fullWidth - size) / 2}
-        y={(fullHeight - size) / 2}>
+        x={(width - size) / 2}
+        y={(height - size) / 2}>
         <Shadow blur={5} color='rgba(0,0, 0, .25)' dx={0} dy={5} />
       </ResponsiveText>
     </Canvas>
