@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useState } from 'react';
+import { SharedValue } from 'react-native-reanimated';
 import {
   EllipsizeMode,
   HorizontalAlignment,
@@ -12,6 +13,7 @@ const DEFAULT_TEXT =
 type StyleEditorContextType = {
   animationDuration: number | undefined;
   animationEasing: keyof typeof EASING | undefined;
+  animationProgress: SharedValue<number> | undefined;
   backgroundColor: string | undefined;
   color: string | undefined;
   ellipsizeMode: EllipsizeMode | undefined;
@@ -22,6 +24,9 @@ type StyleEditorContextType = {
   setAnimationDuration: (animationDuration: number | undefined) => void;
   setAnimationEasing: (
     animationEasing: keyof typeof EASING | undefined
+  ) => void;
+  setAnimationProgress: (
+    animationProgress: SharedValue<number> | undefined
   ) => void;
   setBackgroundColor: (backgroundColor: string | undefined) => void;
   setColor: (color: string | undefined) => void;
@@ -82,6 +87,9 @@ export function StyleEditorProvider({
   >();
   const [color, setColor] = useState<string | undefined>();
   const [backgroundColor, setBackgroundColor] = useState<string | undefined>();
+  const [animationProgress, setAnimationProgress] = useState<
+    SharedValue<number> | undefined
+  >();
 
   const [text, setText] = useState(DEFAULT_TEXT);
 
@@ -92,6 +100,7 @@ export function StyleEditorProvider({
   const contextValue: StyleEditorContextType = {
     animationDuration,
     animationEasing,
+    animationProgress,
     backgroundColor,
     color,
     ellipsizeMode,
@@ -101,6 +110,7 @@ export function StyleEditorProvider({
     numberOfLines,
     setAnimationDuration,
     setAnimationEasing,
+    setAnimationProgress,
     setBackgroundColor,
     setColor,
     setEllipsizeMode,

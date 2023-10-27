@@ -53,6 +53,7 @@ export default function TextPreview({
   const {
     animationDuration,
     animationEasing,
+    animationProgress,
     backgroundColor,
     color,
     ellipsizeMode,
@@ -105,6 +106,7 @@ export default function TextPreview({
             setCanvasDimensions({ height: layout.height, width: layout.width });
           }}>
           <ResponsiveText
+            animationProgress={animationProgress}
             backgroundColor={backgroundColor}
             color={color}
             ellipsizeMode={ellipsizeMode}

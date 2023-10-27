@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
+    "@miblanchard/react-native-slider": "^2.3.1",
     "@react-native-picker/picker": "2.4.10",
     "@shopify/react-native-skia": "0.1.196",
     "expo": "~49.0.15",

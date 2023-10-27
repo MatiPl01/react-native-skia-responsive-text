@@ -1,4 +1,7 @@
+import { useState } from 'react';
 import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
+// eslint-disable-next-line import/default
+import Animated, { FadeIn, useSharedValue } from 'react-native-reanimated';
 import {
   EllipsizeMode,
   HorizontalAlignment,
@@ -6,8 +9,15 @@ import {
 } from 'react-native-skia-responsive-text';
 import { EASING } from 'src/constants';
 import { useStyleEditorContext } from 'src/context';
+import { AnimationType } from 'src/types';
 
-import { ColorSelector, NumberInput, SelectInput, TextInput } from './input';
+import {
+  ColorSelector,
+  NumberInput,
+  SelectInput,
+  SliderInput,
+  TextInput
+} from './input';
 
 const horizontalAlignmentOptions: Array<{
   label: HorizontalAlignment;
@@ -39,6 +49,15 @@ const ellipsizeModeOptions: Array<{
   { label: 'clip', value: 'clip' }
 ];
 
+const animationTypeOptions: Array<{
+  label: string;
+  value: AnimationType;
+}> = [
+  { label: 'none', value: 'none' },
+  { label: 'Progress-based', value: 'progress' },
+  { label: 'Timing-based', value: 'timing' }
+];
+
 const easingOptions: Array<{
   label: keyof typeof EASING;
   value: keyof typeof EASING;
@@ -56,6 +75,9 @@ export default function StyleEditor({
   canvasDimensions,
   previewInnerPadding
 }: StyleEditorProps) {
+  const [animationType, setAnimationType] = useState<AnimationType>('none');
+  const animationProgress = useSharedValue(0);
+
   const {
     animationDuration,
     animationEasing,
@@ -68,6 +90,7 @@ export default function StyleEditor({
     numberOfLines,
     setAnimationDuration,
     setAnimationEasing,
+    setAnimationProgress,
     setBackgroundColor,
     setColor,
     setEllipsizeMode,
@@ -207,29 +230,65 @@ export default function StyleEditor({
         <View style={styles.sectionGroup}>
           <Text style={styles.sectionLabel}>Alignment change animation</Text>
           <View style={styles.subSection}>
-            <Text style={styles.subSectionLabel}>duration</Text>
-            <View style={styles.sectionInput}>
-              <NumberInput
-                max={1000}
-                min={100}
-                placeholder='Duration (ms)'
-                step={50}
-                value={animationDuration}
-                onChange={setAnimationDuration}
-              />
-            </View>
-          </View>
-          <View style={styles.subSection}>
-            <Text style={styles.subSectionLabel}>easing</Text>
+            <Text style={styles.sectionLabel}>Animation type</Text>
             <View style={styles.sectionInput}>
               <SelectInput
-                items={easingOptions}
-                placeholder='Easing'
-                value={animationEasing}
-                onChange={setAnimationEasing}
+                items={animationTypeOptions}
+                placeholder='Animation type'
+                value={animationType}
+                onChange={value => {
+                  if (value !== 'timing') {
+                    setAnimationDuration(undefined);
+                    setAnimationEasing(undefined);
+                  }
+                  setAnimationProgress(
+                    value === 'progress' ? animationProgress : undefined
+                  );
+                  setAnimationType(value);
+                }}
               />
             </View>
           </View>
+
+          {animationType === 'timing' && (
+            <Animated.View entering={FadeIn} style={styles.sectionGroup}>
+              <View style={styles.subSection}>
+                <Text style={styles.subSectionLabel}>duration</Text>
+                <View style={styles.sectionInput}>
+                  <NumberInput
+                    max={1000}
+                    min={100}
+                    placeholder='Duration (ms)'
+                    step={50}
+                    value={animationDuration}
+                    onChange={setAnimationDuration}
+                  />
+                </View>
+              </View>
+              <View style={styles.subSection}>
+                <Text style={styles.subSectionLabel}>easing</Text>
+                <View style={styles.sectionInput}>
+                  <SelectInput
+                    items={easingOptions}
+                    placeholder='Easing'
+                    value={animationEasing}
+                    onChange={setAnimationEasing}
+                  />
+                </View>
+              </View>
+            </Animated.View>
+          )}
+
+          {animationType === 'progress' && (
+            <Animated.View entering={FadeIn} style={styles.sectionGroup}>
+              <View style={styles.subSection}>
+                <Text style={styles.subSectionLabel}>progress</Text>
+                <View style={styles.sectionInput}>
+                  <SliderInput progress={animationProgress} />
+                </View>
+              </View>
+            </Animated.View>
+          )}
         </View>
 
         <View style={styles.sectionGroup}>
