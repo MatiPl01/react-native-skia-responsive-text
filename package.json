@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "author": "Mateusz Łopaciński <lop.mateusz.2001@gmail.com>",
   "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^11.0.0",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^9.2.1",
+    "@semantic-release/npm": "^11.0.0",
+    "@semantic-release/release-notes-generator": "^12.0.0",
     "@shopify/react-native-skia": "0.1.196",
     "eslint": "^8.52.0",
     "eslint-config-react-native-matipl01": "^1.0.2",
@@ -13,6 +19,7 @@
     "react": "^18.2.0",
     "react-native": "^0.72.5",
     "react-native-reanimated": "~3.3.0",
+    "semantic-release": "^22.0.5",
     "syncpack": "^11.2.1",
     "typescript": "^5.2.2"
   },
