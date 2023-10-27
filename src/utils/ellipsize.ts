@@ -24,9 +24,11 @@ export const trimLineStart = (
     firstIndex++;
   }
 
+  const text = `${prefix}${line.text.slice(firstIndex).trimStart()}`;
+
   return {
-    text: `${prefix}${line.text.slice(firstIndex).trimStart()}`,
-    width: lineWidth
+    text,
+    width: font.getTextWidth(text)
   };
 };
 
@@ -51,9 +53,11 @@ export const trimLineEnd = (
     lastIndex--;
   }
 
+  const text = `${line.text.slice(0, lastIndex + 1).trimEnd()}${suffix}`;
+
   return {
-    text: `${line.text.slice(0, lastIndex + 1).trimEnd()}${suffix}`,
-    width: lineWidth
+    text,
+    width: font.getTextWidth(text)
   };
 };
 
@@ -98,10 +102,12 @@ export const trimLineCenter = (
     lineWidth = firstHalfWidth + secondHalfWidth + font.getTextWidth(infix);
   }
 
+  const text = `${line.text
+    .slice(0, firstHalfIndex)
+    .trimEnd()}${infix}${line.text.slice(secondHalfIndex).trimStart()}`;
+
   return {
-    text: `${line.text.slice(0, firstHalfIndex).trimEnd()}${infix}${line.text
-      .slice(secondHalfIndex)
-      .trimStart()}`,
-    width: lineWidth
+    text,
+    width: font.getTextWidth(text)
   };
 };
