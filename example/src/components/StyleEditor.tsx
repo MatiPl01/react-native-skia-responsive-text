@@ -4,6 +4,7 @@ import {
   HorizontalAlignment,
   VerticalAlignment
 } from 'react-native-skia-responsive-text';
+import { EASING } from 'src/constants';
 import { useStyleEditorContext } from 'src/context';
 
 import { NumberInput, SelectInput, TextInput } from './input';
@@ -38,6 +39,14 @@ const ellipsizeModeOptions: Array<{
   { label: 'clip', value: 'clip' }
 ];
 
+const easingOptions: Array<{
+  label: keyof typeof EASING;
+  value: keyof typeof EASING;
+}> = Object.keys(EASING).map(key => ({
+  label: key as keyof typeof EASING,
+  value: key as keyof typeof EASING
+}));
+
 type StyleEditorProps = {
   canvasDimensions: { height: number; width: number };
   previewInnerPadding: number;
@@ -48,11 +57,15 @@ export default function StyleEditor({
   previewInnerPadding
 }: StyleEditorProps) {
   const {
+    animationDuration,
+    animationEasing,
     ellipsizeMode,
     height,
     horizontalAlignment,
     lineHeight,
     numberOfLines,
+    setAnimationDuration,
+    setAnimationEasing,
     setEllipsizeMode,
     setHeight,
     setHorizontalAlignment,
@@ -100,28 +113,6 @@ export default function StyleEditor({
               placeholder='Line height'
               value={lineHeight}
               onChange={setLineHeight}
-            />
-          </View>
-        </View>
-
-        <View style={styles.sectionGroup}>
-          <Text style={styles.sectionLabel}>Alignment</Text>
-          <View style={styles.subSection}>
-            <Text style={styles.subSectionLabel}>horizontal</Text>
-            <SelectInput
-              items={horizontalAlignmentOptions}
-              placeholder='Horizontal alignment'
-              value={horizontalAlignment}
-              onChange={setHorizontalAlignment}
-            />
-          </View>
-          <View style={styles.subSection}>
-            <Text style={styles.subSectionLabel}>vertical</Text>
-            <SelectInput
-              items={verticalAlignmentOptions}
-              placeholder='Vertical alignment'
-              value={verticalAlignment}
-              onChange={setVerticalAlignment}
             />
           </View>
         </View>
@@ -175,6 +166,54 @@ export default function StyleEditor({
               onChange={setEllipsizeMode}
             />
           </View>
+        </View>
+
+        <View style={styles.sectionGroup}>
+          <Text style={styles.sectionLabel}>Alignment</Text>
+          <View style={styles.subSection}>
+            <Text style={styles.subSectionLabel}>horizontal</Text>
+            <SelectInput
+              items={horizontalAlignmentOptions}
+              placeholder='Horizontal alignment'
+              value={horizontalAlignment}
+              onChange={setHorizontalAlignment}
+            />
+          </View>
+          <View style={styles.subSection}>
+            <Text style={styles.subSectionLabel}>vertical</Text>
+            <SelectInput
+              items={verticalAlignmentOptions}
+              placeholder='Vertical alignment'
+              value={verticalAlignment}
+              onChange={setVerticalAlignment}
+            />
+          </View>
+        </View>
+
+        <View style={styles.sectionGroup}>
+          <Text style={styles.sectionLabel}>Alignment change animation</Text>
+          <View style={styles.subSection}>
+            <Text style={styles.subSectionLabel}>duration</Text>
+            <View style={styles.sectionInput}>
+              <NumberInput
+                max={1000}
+                min={100}
+                placeholder='Duration (ms)'
+                step={50}
+                value={animationDuration}
+                onChange={setAnimationDuration}
+              />
+            </View>
+          </View>
+        </View>
+        <View style={styles.subSection}>
+          <Text style={styles.subSectionLabel}>easing</Text>
+          <SelectInput
+            items={easingOptions}
+            placeholder='Easing'
+            value={animationEasing}
+            onChange={setAnimationEasing}
+          />
         </View>
       </View>
     </ScrollView>

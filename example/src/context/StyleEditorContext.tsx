@@ -4,16 +4,23 @@ import {
   HorizontalAlignment,
   VerticalAlignment
 } from 'react-native-skia-responsive-text';
+import { EASING } from 'src/constants';
 
 const DEFAULT_TEXT =
   'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Error magnam similique nemo!';
 
 type StyleEditorContextType = {
+  animationDuration: number | undefined;
+  animationEasing: keyof typeof EASING | undefined;
   ellipsizeMode: EllipsizeMode | undefined;
   height: number | undefined;
   horizontalAlignment: HorizontalAlignment | undefined;
   lineHeight: number | undefined;
   numberOfLines: number | undefined;
+  setAnimationDuration: (animationDuration: number | undefined) => void;
+  setAnimationEasing: (
+    animationEasing: keyof typeof EASING | undefined
+  ) => void;
   setEllipsizeMode: (ellipsizeMode: EllipsizeMode | undefined) => void;
   setHeight: (height: number | undefined) => void;
   setHorizontalAlignment: (
@@ -63,6 +70,10 @@ export function StyleEditorProvider({
   >();
   const [width, setWidth] = useState<number | undefined>();
   const [height, setHeight] = useState<number | undefined>();
+  const [animationDuration, setAnimationDuration] = useState<
+    number | undefined
+  >();
+  const [animationEasing, setAnimationEasing] = useState<string | undefined>();
 
   const [text, setText] = useState(DEFAULT_TEXT);
 
@@ -71,11 +82,15 @@ export function StyleEditorProvider({
   }, []);
 
   const contextValue: StyleEditorContextType = {
+    animationDuration,
+    animationEasing,
     ellipsizeMode,
     height,
     horizontalAlignment,
     lineHeight,
     numberOfLines,
+    setAnimationDuration,
+    setAnimationEasing,
     setEllipsizeMode,
     setHeight,
     setHorizontalAlignment,
