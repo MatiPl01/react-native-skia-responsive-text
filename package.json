@@ -16,6 +16,24 @@
     "syncpack": "^11.2.1",
     "typescript": "^5.2.2"
   },
+  "files": [
+    "src",
+    "dist",
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "keywords": [
+    "android",
+    "animated-text",
+    "ios",
+    "react-native",
+    "react-native-skia",
+    "reanimated",
+    "responsive-text",
+    "skia",
+    "text"
+  ],
   "license": "MIT",
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -27,7 +45,8 @@
       "syncpack format"
     ]
   },
-  "main": "index.js",
+  "main": "dist/commonjs/index",
+  "module": "dist/module/index",
   "peerDependencies": {
     "@shopify/react-native-skia": ">=0.1.75",
     "react": "*",
@@ -45,6 +64,9 @@
     "react-native": "^0.72.5"
   },
   "scripts": {
+    "build": "yarn clean && bob build && yarn declarations:emit",
+    "clean": "rm -rf dist && rm -f *.tgz",
+    "declarations:emit": "tsc -p tsconfig.build.json",
     "example": "yarn --cwd example workspace example start",
     "example:android": "yarn workspace example android",
     "example:ios": "yarn workspace example ios",
@@ -52,11 +74,13 @@
     "format:deps": "syncpack format",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
+    "prepack": "yarn build",
     "prepare": "husky install",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "typecheck:all": "yarn typecheck && yarn typecheck:example",
     "typecheck:example": "yarn workspace example typecheck"
   },
+  "types": "dist/typescript/index.d.ts",
   "workspaces": [
     "example"
   ]
