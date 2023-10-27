@@ -64,7 +64,9 @@
     "react-native": "^0.72.5"
   },
   "scripts": {
-    "build": "bob build",
+    "build": "yarn clean && bob build && yarn declarations:emit",
+    "clean": "rm -rf dist && rm -f *.tgz",
+    "declarations:emit": "tsc -p tsconfig.build.json",
     "example": "yarn --cwd example workspace example start",
     "example:android": "yarn workspace example android",
     "example:ios": "yarn workspace example ios",
@@ -72,6 +74,7 @@
     "format:deps": "syncpack format",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
+    "prepack": "yarn build",
     "prepare": "husky install",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "typecheck:all": "yarn typecheck && yarn typecheck:example",
