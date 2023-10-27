@@ -63,6 +63,7 @@ export function StyleEditorProvider({
   >();
   const [width, setWidth] = useState<number | undefined>();
   const [height, setHeight] = useState<number | undefined>();
+
   const [text, setText] = useState(DEFAULT_TEXT);
 
   const handleSetText = useCallback((newText: string | undefined) => {

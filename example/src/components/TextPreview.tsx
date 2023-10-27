@@ -65,21 +65,23 @@ export default function TextPreview({
         <View
           style={[styles.previewContainer, { padding: previewInnerPadding }]}>
           <Text
-            style={{
-              color: 'white',
-              fontFamily: 'Poppins-Regular',
-              fontSize,
-              height,
-              lineHeight,
-              textAlign:
-                horizontalAlignment === 'center-left' ||
-                horizontalAlignment === 'center-right'
-                  ? 'center'
-                  : horizontalAlignment,
-              verticalAlign:
-                verticalAlignment === 'center' ? 'middle' : verticalAlignment,
-              width
-            }}>
+            style={[
+              styles.previewText,
+              {
+                color: 'white',
+                fontSize,
+                height,
+                lineHeight,
+                textAlign:
+                  horizontalAlignment === 'center-left' ||
+                  horizontalAlignment === 'center-right'
+                    ? 'center'
+                    : horizontalAlignment,
+                verticalAlign:
+                  verticalAlignment === 'center' ? 'middle' : verticalAlignment,
+                width
+              }
+            ]}>
             {text}
           </Text>
         </View>
@@ -125,5 +127,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
     borderRadius: 10,
     flex: 1
+  },
+  previewText: {
+    fontFamily: 'Poppins-Regular'
   }
 });

@@ -5,10 +5,39 @@ import { EllipsizeMode, TextLineData } from '../types';
 
 const ELLIPSIS = '...';
 
-const getTextChunks = (text: string): Array<string> =>
-  text.split(/(\s+(?=\S))/g).filter(word => word.length > 0);
-
 const isSpace = (text: string): boolean => text.trim().length === 0;
+
+export const getTextChunks = (text: string): Array<string> => {
+  const splittedText = text.split(/(\s+)/g).filter(Boolean);
+  const chunks: Array<string> = [];
+
+  if (splittedText.length === 0) {
+    return chunks;
+  }
+
+  const firstChunk = splittedText[0]!;
+  let prefix = '';
+  let i = 0;
+
+  if (isSpace(firstChunk)) {
+    prefix = firstChunk;
+    i++;
+  }
+
+  for (; i < splittedText.length; i++) {
+    const chunk = prefix + splittedText[i]!;
+    prefix = '';
+    const nextChunk = splittedText[i + 1];
+    if (nextChunk && isSpace(nextChunk)) {
+      chunks.push(chunk + nextChunk);
+      i++;
+    } else {
+      chunks.push(chunk);
+    }
+  }
+
+  return chunks;
+};
 
 const wrapWithoutTrimming = (
   chunks: Array<string>,
@@ -24,24 +53,55 @@ const wrapWithoutTrimming = (
 
   let nextChunkWidth = font.getTextWidth(chunks[0]!);
 
+  const addNewLine = () => {
+    result.push({
+      text: currentLine.chunks.join(''),
+      width: currentLine.width
+    });
+    currentLine = { chunks: [], width: 0 };
+  };
+
   for (let i = 0; i < chunks.length; i++) {
     const chunk = chunks[i]!;
     const chunkWidth = nextChunkWidth;
     const nextChunk = chunks[i + 1];
     nextChunkWidth = nextChunk ? font.getTextWidth(nextChunk) : Infinity;
 
-    if (currentLine.chunks.length || !isSpace(chunk)) {
+    // If the chunk will fit in the text line, don't break it
+    if (chunkWidth <= width) {
+      // If the current chunk won't fit in the current line, add it to the next line
+      if (currentLine.width + chunkWidth > width) {
+        addNewLine();
+      }
+      // Add the chunk to the current line
       currentLine.chunks.push(chunk);
       currentLine.width += chunkWidth;
     }
+    // Otherwise, if the chunk is a single word, break it
+    else {
+      let j = 0;
+      let k = 1;
+      let nextSliceWidth = font.getTextWidth(chunk.slice(j, k + 1));
 
-    if (currentLine.width + nextChunkWidth >= width) {
-      result.push({
-        text: currentLine.chunks.join(''),
-        width: currentLine.width
-      });
-      currentLine = { chunks: [], width: 0 };
+      for (; k <= chunk.length; k++) {
+        const slice = chunk.slice(j, k);
+        if (currentLine.width + nextSliceWidth > width || k === chunk.length) {
+          currentLine.chunks.push(slice);
+          currentLine.width += font.getTextWidth(slice);
+          if (k < chunk.length) addNewLine();
+          j = k;
+        }
+        nextSliceWidth = font.getTextWidth(chunk.slice(j, k + 1));
+      }
     }
+  }
+
+  // If the last line is not empty, add it to the result
+  if (currentLine.chunks.length) {
+    result.push({
+      text: currentLine.chunks.join(''),
+      width: currentLine.width
+    });
   }
 
   return result;
@@ -210,21 +270,25 @@ const wrapWithTrimming = (
 };
 
 export const wrapText = (
-  text: string,
+  textChunks: Array<string>,
   font: SkFont,
   width: number,
   numberOfLines = Infinity,
   ellipsizeMode: EllipsizeMode = 'tail'
 ): Array<TextLineData> => {
-  const chunks = getTextChunks(text);
-
-  if (!chunks.length) {
+  if (!textChunks.length) {
     return [];
   }
 
   if (numberOfLines === Infinity) {
-    return wrapWithoutTrimming(chunks, font, width);
+    return wrapWithoutTrimming(textChunks, font, width);
   }
 
-  return wrapWithTrimming(chunks, font, width, numberOfLines, ellipsizeMode);
+  return wrapWithTrimming(
+    textChunks,
+    font,
+    width,
+    numberOfLines,
+    ellipsizeMode
+  );
 };

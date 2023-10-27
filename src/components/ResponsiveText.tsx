@@ -13,6 +13,7 @@ import {
   VerticalAlignment
 } from '../types';
 import {
+  getTextChunks,
   getTextLinesAlignment,
   getVerticalAlignmentOffset,
   wrapText
@@ -66,10 +67,11 @@ function ResponsiveText({
   const horizontalAlignment = useAnimatableValue(horizontalAlignmentProp);
   const verticalAlignment = useAnimatableValue(verticalAlignmentProp);
 
+  const textChunks = useMemo(() => getTextChunks(text), [text]);
   // Divide text into lines
   const textLines = useMemo<Array<TextLineData>>(
-    () => wrapText(text, font, width, numberOfLines, ellipsizeMode),
-    [text, font, width, numberOfLines, ellipsizeMode]
+    () => wrapText(textChunks, font, width, numberOfLines, ellipsizeMode),
+    [textChunks, font, width, numberOfLines, ellipsizeMode]
   );
 
   // Calculate remaining values

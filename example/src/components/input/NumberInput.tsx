@@ -10,6 +10,7 @@ enum RepeatAction {
 }
 
 type NumberInputProps = {
+  longPressStep?: number;
   max?: number;
   min?: number;
   onChange: (value: number | undefined) => void;
@@ -19,6 +20,7 @@ type NumberInputProps = {
 };
 
 export default function NumberInput({
+  longPressStep,
   max = 100,
   min = 0,
   onChange,
@@ -50,38 +52,45 @@ export default function NumberInput({
     }
   };
 
-  const handleIncrement = useCallback(() => {
-    setValue(oldValue => {
-      const newValue = Math.min(
-        !isNaN(oldValue as number) ? (oldValue as number) + step : min,
-        max
-      );
-      onChange?.(newValue);
-      return newValue;
-    });
-  }, [onChange]);
+  const handleIncrement = useCallback(
+    (s: number) => {
+      setValue(oldValue => {
+        const newValue = Math.min(
+          !isNaN(oldValue as number) ? (oldValue as number) + s : min,
+          max
+        );
+        onChange?.(newValue);
+        return newValue;
+      });
+    },
+    [onChange, step, min, max]
+  );
 
-  const handleDecrement = useCallback(() => {
-    setValue(oldValue => {
-      const newValue = Math.max(
-        !isNaN(oldValue as number) ? (oldValue as number) - step : max,
-        min
-      );
-      onChange?.(newValue);
-      return newValue;
-    });
-  }, [onChange]);
+  const handleDecrement = useCallback(
+    (s: number) => {
+      setValue(oldValue => {
+        const newValue = Math.max(
+          !isNaN(oldValue as number) ? (oldValue as number) - s : max,
+          min
+        );
+        onChange?.(newValue);
+        return newValue;
+      });
+    },
+    [onChange, step, min, max]
+  );
 
   useEffect(() => {
     if (repeatedAction === null) return;
     const interval = setInterval(
-      repeatedAction === RepeatAction.Decrement
-        ? handleDecrement
-        : handleIncrement,
+      () =>
+        repeatedAction === RepeatAction.Decrement
+          ? handleDecrement(longPressStep ?? step)
+          : handleIncrement(longPressStep ?? step),
       100
     );
     return () => clearInterval(interval);
-  }, [repeatedAction, handleDecrement, handleIncrement]);
+  }, [repeatedAction, handleDecrement, handleIncrement, step, longPressStep]);
 
   useEffect(() => {
     setValue(valueProp);
@@ -93,7 +102,7 @@ export default function NumberInput({
         disabled={value === min}
         style={[styles.button, { opacity: value === min ? 0.5 : 1 }]}
         onLongPress={() => setRepeatedAction(RepeatAction.Decrement)}
-        onPress={handleDecrement}
+        onPress={() => handleDecrement(step)}
         onPressOut={() => setRepeatedAction(null)}>
         <Text style={styles.buttonText}>-</Text>
       </TouchableOpacity>
@@ -111,7 +120,7 @@ export default function NumberInput({
         disabled={value === max}
         style={[styles.button, { opacity: value === max ? 0.5 : 1 }]}
         onLongPress={() => setRepeatedAction(RepeatAction.Increment)}
-        onPress={handleIncrement}
+        onPress={() => handleIncrement(step)}
         onPressOut={() => setRepeatedAction(null)}>
         <Text style={styles.buttonText}>+</Text>
       </TouchableOpacity>

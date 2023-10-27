@@ -80,6 +80,7 @@ export default function StyleEditor({
           <Text style={styles.sectionLabel}>lineHeight</Text>
           <View style={styles.sectionInput}>
             <NumberInput
+              longPressStep={2}
               max={30}
               min={10}
               placeholder='Line Height'
@@ -114,8 +115,9 @@ export default function StyleEditor({
         <View style={styles.sectionGroup}>
           <Text style={styles.sectionLabel}>Dimensions</Text>
           <View style={styles.subSection}>
-            <Text style={styles.subSectionLabel}>horizontal</Text>
+            <Text style={styles.subSectionLabel}>width</Text>
             <NumberInput
+              longPressStep={5}
               max={maxWidth}
               min={0}
               placeholder='Width'
@@ -124,8 +126,9 @@ export default function StyleEditor({
             />
           </View>
           <View style={styles.subSection}>
-            <Text style={styles.subSectionLabel}>vertical</Text>
+            <Text style={styles.subSectionLabel}>height</Text>
             <NumberInput
+              longPressStep={5}
               max={maxHeight}
               min={0}
               placeholder='Height'

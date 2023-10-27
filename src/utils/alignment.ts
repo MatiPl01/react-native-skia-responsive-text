@@ -31,6 +31,10 @@ export const getVerticalAlignmentOffset = (
   verticalAlignment: VerticalAlignment = 'top'
 ): number => {
   'worklet';
+  if (componentHeight >= parentHeight) {
+    return 0;
+  }
+
   switch (verticalAlignment) {
     case 'top':
       return 0;

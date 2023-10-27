@@ -59,9 +59,9 @@ export default function EditorExample() {
           <Canvas style={StyleSheet.absoluteFill}>
             <Rect height={height} width={width}>
               <LinearGradient
-                colors={['#16546c', '#5d0967']}
+                colors={['#40C9FF', '#E81CFF']}
                 end={{ x: width, y: height }}
-                positions={[0, 0.75]}
+                positions={[0, 0.5]}
                 start={{ x: 0, y: 0 }}
               />
             </Rect>
