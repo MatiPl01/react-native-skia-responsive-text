@@ -132,6 +132,8 @@ When `animationSettings` are specified, every change of `ResponsiveText` propert
 
 **Example**
 
+https://github.com/MatiPl01/react-native-skia-responsive-text/assets/52978053/2ae0fb10-8e28-4090-9854-39df69fa1e48
+
 ### Progress based animations
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
