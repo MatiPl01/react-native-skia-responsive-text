@@ -59,10 +59,12 @@ export default function TextPreview({
     ellipsizeMode,
     height,
     horizontalAlignment,
+    horizontalAlignmentValue,
     lineHeight,
     numberOfLines,
     text,
     verticalAlignment,
+    verticalAlignmentValue,
     width
   } = useStyleEditorContext();
 
@@ -112,11 +114,11 @@ export default function TextPreview({
             ellipsizeMode={ellipsizeMode}
             font={font}
             height={height}
-            horizontalAlignment={horizontalAlignment}
+            horizontalAlignment={horizontalAlignmentValue}
             lineHeight={lineHeight}
             numberOfLines={numberOfLines}
             text={text}
-            verticalAlignment={verticalAlignment}
+            verticalAlignment={verticalAlignmentValue}
             width={width}
             x={previewInnerPadding}
             y={previewInnerPadding}

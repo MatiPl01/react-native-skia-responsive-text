@@ -1,5 +1,5 @@
 {
   "extends": "eslint-config-react-native-matipl01/tsconfig.base",
   "include": ["src"],
-  "exclude": ["example"]
+  "exclude": ["example", "node_modules"]
 }

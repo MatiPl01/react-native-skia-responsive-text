@@ -59,7 +59,8 @@ export default function TextLine({
         x.value = target.x;
         y.value = target.y;
       }
-    }
+    },
+    [animationProgress, animationSettings, index, fontSize]
   );
 
   useAnimatedReaction(
@@ -79,7 +80,8 @@ export default function TextLine({
 
       x.value = interpolate(progress, [0, 1], [startX.value, targetX]);
       y.value = interpolate(progress, [0, 1], [startY.value, targetY]);
-    }
+    },
+    [animationProgress]
   );
 
   return <Text {...rest} x={x} y={y} />;
