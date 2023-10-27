@@ -130,11 +130,25 @@ Animations based on settings specified in the `animationSettings` property. By d
 
 When `animationSettings` are specified, every change of `ResponsiveText` properties resulting in text lines position change (i.e. alignment, line height, text component height change) will be animated.
 
-**Example**
+#### Example
 
 https://github.com/MatiPl01/react-native-skia-responsive-text/assets/52978053/2ae0fb10-8e28-4090-9854-39df69fa1e48
 
 ### Progress based animations
+
+Progress based animations are the alternative way to animate text. Instead of passing `animationSettings` property, you have to pass the `animationProgress` which is a reanimated shared value indicating the current transition progress.
+
+Every progress transition starts from the current text position and animates text lines to the new target position (updated alignment).
+
+#### How to properly create progress-based animations?
+
+To create smooth text animations, you have to follow these rules:
+
+1. Use reanimated shared values as `horizontalAlignment` and `verticalAlignment` instead of plain numbers (to ensure that there is no delay in updating alignment settings),
+2. Update `horizontalAlignment` and `verticalAlignment` before updating the `animationProgress` (the animation to new alignment values will start when the `animationProgress` is modified),
+3. Ensure that the `animationProgress` value is set to `0` before you start updating the progress (to start the animation from the current text position).
+
+#### Example
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
