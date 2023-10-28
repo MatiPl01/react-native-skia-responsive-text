@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/MatiPl01/react-native-skia-responsive-text/compare/v1.1.1...v1.1.2) (2023-10-28)
+
+
+### Bug Fixes
+
+* Recordings in the README ([#27](https://github.com/MatiPl01/react-native-skia-responsive-text/issues/27)) ([e573f8c](https://github.com/MatiPl01/react-native-skia-responsive-text/commit/e573f8cd01e1591a1841c6cde4045f961d68a0bd))
+
 ## [1.1.1](https://github.com/MatiPl01/react-native-skia-responsive-text/compare/v1.1.0...v1.1.1) (2023-10-28)
 
 
