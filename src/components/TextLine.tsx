@@ -1,4 +1,5 @@
 import { Text, TextProps } from '@shopify/react-native-skia';
+import { memo } from 'react';
 import {
   interpolate,
   SharedValue,
@@ -19,7 +20,7 @@ type TextLineProps = Omit<TextProps, 'x' | 'y'> & {
   verticalAlignmentOffset: SharedValue<number>;
 };
 
-export default function TextLine({
+function TextLine({
   animationProgress,
   animationSettings,
   fontSize,
@@ -86,3 +87,5 @@ export default function TextLine({
 
   return <Text {...rest} x={x} y={y} />;
 }
+
+export default memo(TextLine);

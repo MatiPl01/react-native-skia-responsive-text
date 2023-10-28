@@ -5,6 +5,7 @@ import Animated, { FadeIn, useSharedValue } from 'react-native-reanimated';
 import {
   EllipsizeMode,
   HorizontalAlignment,
+  TextOverflow,
   VerticalAlignment
 } from 'react-native-skia-responsive-text';
 import { EASING } from 'src/constants';
@@ -58,6 +59,14 @@ const animationTypeOptions: Array<{
   { label: 'Timing-based', value: 'timing' }
 ];
 
+const overflowOptions: Array<{
+  label: TextOverflow;
+  value: TextOverflow;
+}> = [
+  { label: 'hidden', value: 'hidden' },
+  { label: 'visible', value: 'visible' }
+];
+
 const easingOptions: Array<{
   label: keyof typeof EASING;
   value: keyof typeof EASING;
@@ -90,6 +99,7 @@ export default function StyleEditor({
     horizontalAlignmentValue,
     lineHeight,
     numberOfLines,
+    overflow,
     setAnimationDuration,
     setAnimationEasing,
     setAnimationProgress,
@@ -101,6 +111,7 @@ export default function StyleEditor({
     setLineHeight,
     setNumberOfLines,
     setText,
+    setTextOverflow,
     setVerticalAlignment,
     setWidth,
     text,
@@ -129,6 +140,18 @@ export default function StyleEditor({
               value={text}
               onChangeText={setText}
               onClear={() => setText('')}
+            />
+          </View>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionLabel}>Overflow</Text>
+          <View style={styles.sectionInput}>
+            <SelectInput
+              items={overflowOptions}
+              placeholder='Text overflow'
+              value={overflow}
+              onChange={setTextOverflow}
             />
           </View>
         </View>

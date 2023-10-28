@@ -6,6 +6,7 @@ export type {
   AnimationSettings,
   EllipsizeMode,
   HorizontalAlignment,
+  TextOverflow,
   VerticalAlignment
 } from './types';
 export default ResponsiveText;

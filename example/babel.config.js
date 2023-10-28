@@ -1,7 +1,5 @@
 const path = require('path');
 
-console.log(__dirname);
-
 const rootDir = path.resolve(__dirname, '..');
 const rootPkg = require(path.join(rootDir, 'package.json'));
 

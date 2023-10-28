@@ -6,3 +6,5 @@ export type HorizontalAlignment =
   | 'right';
 
 export type VerticalAlignment = 'bottom' | 'center' | 'top';
+
+export type TextOverflow = 'hidden' | 'visible';
