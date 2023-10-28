@@ -78,9 +78,7 @@
     "lint:fix": "eslint --fix .",
     "prepack": "yarn build",
     "prepare": "husky install",
-    "typecheck": "tsc -p tsconfig.json --noEmit",
-    "typecheck:all": "yarn typecheck && yarn typecheck:example",
-    "typecheck:example": "yarn workspace example typecheck"
+    "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "types": "dist/typescript/index.d.ts"
 }

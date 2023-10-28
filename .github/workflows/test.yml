@@ -25,4 +25,4 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: 🔎 Run typecheck
-        run: yarn typecheck:all
+        run: yarn typecheck
