@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/MatiPl01/react-native-skia-responsive-text/compare/v1.1.0...v1.1.1) (2023-10-28)
+
+
+### Bug Fixes
+
+* Text flickering issue when it was animated ([#26](https://github.com/MatiPl01/react-native-skia-responsive-text/issues/26)) ([07c600c](https://github.com/MatiPl01/react-native-skia-responsive-text/commit/07c600c0da5f360813238e7b544661f6dcbba562))
+
 # [1.1.0](https://github.com/MatiPl01/react-native-skia-responsive-text/compare/v1.0.2...v1.1.0) (2023-10-28)
 
 
