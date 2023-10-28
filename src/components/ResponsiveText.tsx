@@ -1,4 +1,10 @@
-import { Group, Rect, SkFont, TextProps } from '@shopify/react-native-skia';
+import {
+  Group,
+  Mask,
+  Rect,
+  SkFont,
+  TextProps
+} from '@shopify/react-native-skia';
 import { memo, useMemo } from 'react';
 import { runOnJS, SharedValue, useDerivedValue } from 'react-native-reanimated';
 
@@ -10,6 +16,7 @@ import {
   HorizontalAlignment,
   PartialBy,
   TextLineData,
+  TextOverflow,
   VerticalAlignment
 } from '../types';
 import {
@@ -28,6 +35,7 @@ type ResponsiveTextProps = PartialBy<TextProps, 'x' | 'y'> & {
   height?: number;
   numberOfLines?: number;
   onMeasure?: (width: number, height: number) => void;
+  overflow?: TextOverflow;
   width?: number;
 } & AnimatableProps<{
     backgroundColor?: string;
@@ -51,19 +59,21 @@ function ResponsiveText({
   children,
   ellipsizeMode,
   font,
-  height = 0,
+  height: heightProp,
   horizontalAlignment: horizontalAlignmentProp = 'left',
   lineHeight: lineHeightProp,
   numberOfLines,
   onMeasure,
+  overflow = 'hidden',
   text = '',
   verticalAlignment: verticalAlignmentProp = 'top',
-  width = 0,
+  width: widthProp,
   x = 0,
   y = 0,
   ...rest
 }: ResponsiveTextPrivateProps) {
   const fontSize = font.getSize();
+  const width = widthProp ?? font.getTextWidth(text);
 
   // Update animation settings if they are provided
   const animationSettings = useMemo(() => {
@@ -84,6 +94,7 @@ function ResponsiveText({
   const verticalAlignment = useAnimatableValue(verticalAlignmentProp);
 
   const textChunks = useMemo(() => getTextChunks(text), [text]);
+
   // Divide text into lines
   const textLines = useMemo<Array<TextLineData>>(
     () => wrapText(textChunks, font, width, numberOfLines, ellipsizeMode),
@@ -110,32 +121,36 @@ function ResponsiveText({
 
     return alignments;
   }, [textLines]);
+
   const textHeight = useDerivedValue(
     () =>
       textLines.length * lineHeight.value -
       (lineHeight.value - LINE_HEIGHT_MULTIPLIER * fontSize)
   );
-  const backgroundHeight = useDerivedValue(() =>
-    Math.max(textHeight.value, height)
+
+  const backgroundHeight = useDerivedValue(
+    () => heightProp ?? textHeight.value
   );
+
   const verticalAlignmentOffset = useDerivedValue(() =>
     getVerticalAlignmentOffset(
       textHeight.value,
-      height,
+      heightProp,
       verticalAlignment.value
     )
   );
 
-  return (
-    <Group transform={[{ translateX: x }, { translateY: y }]}>
-      {backgroundColor && (
-        <Rect
-          color={backgroundColor}
-          height={backgroundHeight}
-          width={width}
-          y={0}
-        />
-      )}
+  const backgroundComponent = backgroundColor && (
+    <Rect
+      color={backgroundColor}
+      height={backgroundHeight}
+      width={width}
+      y={0}
+    />
+  );
+
+  const textComponent = (
+    <>
       {textLines.map((line, i) => (
         <TextLine
           {...rest}
@@ -151,6 +166,33 @@ function ResponsiveText({
           {children}
         </TextLine>
       ))}
+    </>
+  );
+
+  const maskElement = useMemo(
+    () => <Rect color='white' height={backgroundHeight} width={width} />,
+    [backgroundHeight, width]
+  );
+
+  return (
+    <Group transform={[{ translateX: x }, { translateY: y }]}>
+      {overflow === 'hidden' ? (
+        <>
+          {backgroundComponent && (
+            <Mask mask={maskElement} mode='luminance'>
+              {backgroundComponent}
+            </Mask>
+          )}
+          <Mask mask={maskElement} mode='luminance'>
+            {textComponent}
+          </Mask>
+        </>
+      ) : (
+        <>
+          {backgroundComponent}
+          {textComponent}
+        </>
+      )}
     </Group>
   );
 }

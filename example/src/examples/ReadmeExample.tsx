@@ -4,7 +4,6 @@ import {
   LinearGradient,
   Rect,
   RoundedRect,
-  Shadow,
   useFont
 } from '@shopify/react-native-skia';
 import { useEffect, useState } from 'react';
@@ -104,7 +103,7 @@ export default function ReadmeExample() {
         width={size}
         x={(width - size) / 2}
         y={(height - size) / 2}>
-        <Shadow blur={5} color='rgba(0,0, 0, .25)' dx={0} dy={5} />
+        \
       </ResponsiveText>
     </Canvas>
   );

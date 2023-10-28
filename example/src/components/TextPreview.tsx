@@ -62,6 +62,7 @@ export default function TextPreview({
     horizontalAlignmentValue,
     lineHeight,
     numberOfLines,
+    overflow,
     text,
     verticalAlignment,
     verticalAlignmentValue,
@@ -117,6 +118,7 @@ export default function TextPreview({
             horizontalAlignment={horizontalAlignmentValue}
             lineHeight={lineHeight}
             numberOfLines={numberOfLines}
+            overflow={overflow}
             text={text}
             verticalAlignment={verticalAlignmentValue}
             width={width}

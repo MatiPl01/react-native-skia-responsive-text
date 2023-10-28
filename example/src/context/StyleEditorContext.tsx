@@ -3,6 +3,7 @@ import { SharedValue, useSharedValue } from 'react-native-reanimated';
 import {
   EllipsizeMode,
   HorizontalAlignment,
+  TextOverflow,
   VerticalAlignment
 } from 'react-native-skia-responsive-text';
 import { EASING } from 'src/constants';
@@ -22,6 +23,7 @@ type StyleEditorContextType = {
   horizontalAlignmentValue: SharedValue<HorizontalAlignment>;
   lineHeight: number | undefined;
   numberOfLines: number | undefined;
+  overflow: TextOverflow | undefined;
   setAnimationDuration: (animationDuration: number | undefined) => void;
   setAnimationEasing: (
     animationEasing: keyof typeof EASING | undefined
@@ -39,6 +41,7 @@ type StyleEditorContextType = {
   setLineHeight: (lineHeight: number | undefined) => void;
   setNumberOfLines: (numberOfLines: number | undefined) => void;
   setText: (text: string | undefined) => void;
+  setTextOverflow: (overflow: TextOverflow | undefined) => void;
   setVerticalAlignment: (
     verticalAlignment: VerticalAlignment | undefined
   ) => void;
@@ -92,6 +95,7 @@ export function StyleEditorProvider({
   const [animationProgress, setAnimationProgress] = useState<
     SharedValue<number> | undefined
   >();
+  const [overflow, setTextOverflow] = useState<TextOverflow | undefined>();
 
   const horizontalAlignmentValue = useSharedValue<HorizontalAlignment>('left');
   const verticalAlignmentValue = useSharedValue<VerticalAlignment>('top');
@@ -114,6 +118,7 @@ export function StyleEditorProvider({
     horizontalAlignmentValue,
     lineHeight,
     numberOfLines,
+    overflow,
     setAnimationDuration,
     setAnimationEasing,
     setAnimationProgress,
@@ -125,6 +130,7 @@ export function StyleEditorProvider({
     setLineHeight,
     setNumberOfLines,
     setText: handleSetText,
+    setTextOverflow,
     setVerticalAlignment,
     setWidth,
     text,

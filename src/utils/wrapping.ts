@@ -246,12 +246,6 @@ const wrapWithMiddleTrimming = (
     halfLines + 1
   );
 
-  console.log({
-    halfLines,
-    withoutFromEnd,
-    withoutFromStart
-  });
-
   if (numberOfLines % 2 === 0) {
     return [
       ...withoutFromStart.slice(0, halfLines - 1),
