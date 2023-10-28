@@ -26,20 +26,8 @@ jobs:
         with:
           node-version: 18
 
-      - name: 🔄 Generate Cache Key
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: 💾 Cache Dependencies
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
       - name: 📦 Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install
 
       - name: 🎉 Release
         run: yarn semantic-release
