@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/MatiPl01/react-native-skia-responsive-text/compare/v1.0.2...v1.1.0) (2023-10-28)
+
+
+### Features
+
+* Improve text wrapping, add overflow property ([#25](https://github.com/MatiPl01/react-native-skia-responsive-text/issues/25)) ([199dadb](https://github.com/MatiPl01/react-native-skia-responsive-text/commit/199dadb4b02c7ceee4b639505b430829ab25d32e))
+
 ## [1.0.2](https://github.com/MatiPl01/react-native-skia-responsive-text/compare/v1.0.1...v1.0.2) (2023-10-28)
 
 

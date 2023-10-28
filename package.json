@@ -1,6 +1,6 @@
 {
   "name": "react-native-skia-responsive-text",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "author": "Mateusz Łopaciński <lop.mateusz.2001@gmail.com>",
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
