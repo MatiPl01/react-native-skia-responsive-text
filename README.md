@@ -137,7 +137,7 @@ When `animationSettings` are specified, every change of `ResponsiveText` propert
 
 #### Example
 
-https://github.com/MatiPl01/react-native-skia-responsive-text/assets/52978053/91e35778-a49f-41f7-8d7f-47ebd707d5f0
+https://github.com/MatiPl01/react-native-skia-responsive-text/assets/52978053/f6a1cffa-18ae-4ff1-9d27-4291f67dbbd0
 
 \* This recording was made in the demo app (see the [Demo app](#demo-app) section for more details)
 
@@ -159,7 +159,7 @@ To create smooth text animations, you have to follow these rules:
 
 #### Example
 
-https://github.com/MatiPl01/react-native-skia-responsive-text/assets/52978053/c72dffad-d091-4f4a-902d-3e8f57260c29
+https://github.com/MatiPl01/react-native-skia-responsive-text/assets/52978053/cde6401c-98a7-49b1-8e11-4e6457a8b80a
 
 \* This recording was made in the demo app (see the [Demo app](#demo-app) section for more details)
 
