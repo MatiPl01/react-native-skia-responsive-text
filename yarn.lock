@@ -2219,6 +2219,14 @@
     canvaskit-wasm "0.38.0"
     react-reconciler "^0.27.0"
 
+"@shopify/react-native-skia@0.1.214":
+  version "0.1.214"
+  resolved "https://registry.yarnpkg.com/@shopify/react-native-skia/-/react-native-skia-0.1.214.tgz#55111074919b1e4746e89f6868dad3dff6eda4a9"
+  integrity sha512-QUt9JRzjQIyZUJxRwjhCQtin6qusZkLUfUNAcEQNfGOQlK5JWXrxYsi4BlMQJSiYDLGZmWZhRuPmmQ3ZpNP9Jw==
+  dependencies:
+    canvaskit-wasm "0.38.2"
+    react-reconciler "^0.27.0"
+
 "@sideway/address@^4.1.3":
   version "4.1.4"
   resolved "https://registry.yarnpkg.com/@sideway/address/-/address-4.1.4.tgz#03dccebc6ea47fdc226f7d3d1ad512955d4783f0"
@@ -3274,6 +3282,11 @@ canvaskit-wasm@0.38.0:
   version "0.38.0"
   resolved "https://registry.yarnpkg.com/canvaskit-wasm/-/canvaskit-wasm-0.38.0.tgz#83e6c46f3015c2ff3f6503157f47453af76a7be7"
   integrity sha512-ZEG6lucpbQ4Ld+mY8C1Ng+PMLVP+/AX02jS0Sdl28NyMxuKSa9uKB8oGd1BYp1XWPyO2Jgr7U8pdyjJ/F3xR5Q==
+
+canvaskit-wasm@0.38.2:
+  version "0.38.2"
+  resolved "https://registry.yarnpkg.com/canvaskit-wasm/-/canvaskit-wasm-0.38.2.tgz#b6c2be236670fd0f18977b9026652b2c0e201fee"
+  integrity sha512-ieRb6DO4yL91qUfyRgmyhp2Hi1KmQ9lIMfKacxHVlfp/CpKCkzgAxRGUbCsJFzwLKjs9fufGrIyvnzEYRwm1XQ==
 
 cardinal@^2.1.1:
   version "2.1.1"
@@ -8288,7 +8301,7 @@ react-native-builder-bob@^0.23.1:
     which "^2.0.2"
     yargs "^17.5.1"
 
-react-native-reanimated@~3.3.0:
+react-native-reanimated@3.3.0, react-native-reanimated@~3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-3.3.0.tgz#80f9d58e28fddf62fe4c1bc792337b8ab57936ab"
   integrity sha512-LzfpPZ1qXBGy5BcUHqw3pBC0qSd22qXS3t8hWSbozXNrBkzMhhOrcILE/nEg/PHpNNp1xvGOW8NwpAMF006roQ==

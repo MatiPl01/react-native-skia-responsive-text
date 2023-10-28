@@ -8,6 +8,7 @@ import {
 import { memo, useMemo } from 'react';
 import { runOnJS, SharedValue, useDerivedValue } from 'react-native-reanimated';
 
+import { DEFAULT_FONT } from '../constants';
 import { useAnimatableValue } from '../hooks';
 import {
   AnimatableProps,
@@ -31,7 +32,7 @@ const LINE_HEIGHT_MULTIPLIER = 1.5;
 
 type ResponsiveTextProps = PartialBy<TextProps, 'x' | 'y'> & {
   ellipsizeMode?: EllipsizeMode;
-  font: SkFont;
+  font?: SkFont;
   height?: number;
   numberOfLines?: number;
   onMeasure?: (width: number, height: number) => void;
@@ -58,7 +59,7 @@ function ResponsiveText({
   backgroundColor: backgroundColorProp = 'transparent',
   children,
   ellipsizeMode,
-  font,
+  font = DEFAULT_FONT,
   height: heightProp,
   horizontalAlignment: horizontalAlignmentProp = 'left',
   lineHeight: lineHeightProp,

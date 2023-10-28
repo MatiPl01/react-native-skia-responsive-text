@@ -3,13 +3,11 @@ import {
   Canvas,
   LinearGradient,
   Rect,
-  RoundedRect,
-  useFont
+  RoundedRect
 } from '@shopify/react-native-skia';
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import ResponsiveText, {
   HorizontalAlignment,
   VerticalAlignment
@@ -32,8 +30,6 @@ const ALIGNMENTS: Array<{
 
 export default function ReadmeExample() {
   const fontSize = 18;
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-var-requires
-  const font = useFont(require('../../assets/Poppins-Regular.ttf'), fontSize);
 
   const [{ height, width }, setDimensions] = useState({
     height: 0,
@@ -55,14 +51,6 @@ export default function ReadmeExample() {
 
     return () => clearInterval(interval);
   }, []);
-
-  if (!font) {
-    return (
-      <SafeAreaView>
-        <Text>There was a problem loading fonts</Text>
-      </SafeAreaView>
-    );
-  }
 
   const size = 0.75 * Math.min(width, height);
   const padding = 10;
@@ -94,7 +82,6 @@ export default function ReadmeExample() {
       <ResponsiveText
         animationSettings={{ duration: 300 }}
         color='white'
-        font={font}
         height={size}
         horizontalAlignment={horizontalAlignment}
         lineHeight={1.5 * fontSize}

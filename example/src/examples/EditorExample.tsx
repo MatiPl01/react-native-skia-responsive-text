@@ -2,8 +2,7 @@ import {
   Canvas,
   DataSourceParam,
   LinearGradient,
-  Rect,
-  useFont
+  Rect
 } from '@shopify/react-native-skia';
 import { FontSource, useFonts } from 'expo-font';
 import { useState } from 'react';
@@ -27,7 +26,6 @@ export default function EditorExample() {
 
   const fontSize = 16;
 
-  const font = useFont(FONT, fontSize);
   const [fontsLoaded, fontError] = useFonts({
     'Poppins-Regular': FONT
   });
@@ -41,7 +39,7 @@ export default function EditorExample() {
     return null;
   }
 
-  if (!font || fontError) {
+  if (fontError) {
     return (
       <SafeAreaView>
         <Text>There was a problem loading fonts</Text>
@@ -68,7 +66,6 @@ export default function EditorExample() {
           </Canvas>
           {/* Text preview */}
           <TextPreview
-            font={font}
             fontSize={fontSize}
             previewHeight={previewHeight}
             previewInnerPadding={previewInnerPadding}

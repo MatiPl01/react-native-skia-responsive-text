@@ -1,4 +1,4 @@
-import { Canvas, SkFont } from '@shopify/react-native-skia';
+import { Canvas } from '@shopify/react-native-skia';
 import { PropsWithChildren } from 'react';
 import { StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import ResponsiveText from 'react-native-skia-responsive-text';
@@ -33,7 +33,6 @@ function PreviewContainer({
 }
 
 type TextPreviewProps = {
-  font: SkFont;
   fontSize: number;
   previewHeight: number;
   previewInnerPadding: number;
@@ -44,7 +43,6 @@ type TextPreviewProps = {
 };
 
 export default function TextPreview({
-  font,
   fontSize,
   previewHeight,
   previewInnerPadding,
@@ -113,7 +111,6 @@ export default function TextPreview({
             backgroundColor={backgroundColor}
             color={color}
             ellipsizeMode={ellipsizeMode}
-            font={font}
             height={height}
             horizontalAlignment={horizontalAlignmentValue}
             lineHeight={lineHeight}

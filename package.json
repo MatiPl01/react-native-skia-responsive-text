@@ -9,7 +9,7 @@
     "@semantic-release/github": "^9.2.1",
     "@semantic-release/npm": "^11.0.0",
     "@semantic-release/release-notes-generator": "^12.0.0",
-    "@shopify/react-native-skia": "0.1.196",
+    "@shopify/react-native-skia": "0.1.214",
     "@types/react": "^18.2.33",
     "eslint": "^8.52.0",
     "eslint-config-react-native-matipl01": "^1.0.2",
@@ -57,7 +57,7 @@
   "main": "dist/commonjs/index",
   "module": "dist/module/index",
   "peerDependencies": {
-    "@shopify/react-native-skia": ">=0.1.75",
+    "@shopify/react-native-skia": ">=0.1.210",
     "react": "*",
     "react-native": "*",
     "react-native-reanimated": ">=2.0.0"
