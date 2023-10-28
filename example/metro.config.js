@@ -1,5 +1,7 @@
 const path = require('path');
 const { getDefaultConfig } = require('@expo/metro-config');
+const escape = require('escape-string-regexp');
+const exclusionList = require('metro-config/src/defaults/exclusionList');
 
 const rootDir = path.resolve(__dirname, '..');
 const rootPkg = require(path.join(rootDir, 'package.json'));
@@ -29,6 +31,13 @@ module.exports = {
   // So we blacklist them at the root, and alias them to the versions in example's node_modules
   resolver: {
     ...defaultConfig.resolver,
+
+    blacklistRE: exclusionList(
+      modules.map(
+        m =>
+          new RegExp(`^${escape(path.join(rootDir, 'node_modules', m))}\\/.*$`)
+      )
+    ),
 
     extraNodeModules: {
       ...externalNodeModules
