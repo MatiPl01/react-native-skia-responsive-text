@@ -1,8 +1,8 @@
-<a name="readme-top"></a>
-
 # 🔠 React Native Skia Responsive Text
 
 A library providing a wrapper for the React Native Skia Text component, offering features like user-friendly text alignment, efficient multiline text management, and straightforward text truncation.
+
+<a name="readme-top"></a>
 
 <div align="center">
   <img src="./docs/banner.gif" />
@@ -137,7 +137,9 @@ When `animationSettings` are specified, every change of `ResponsiveText` propert
 
 #### Example
 
-https://github.com/MatiPl01/react-native-skia-responsive-text/assets/52978053/2ae0fb10-8e28-4090-9854-39df69fa1e48
+https://github.com/MatiPl01/react-native-skia-responsive-text/assets/52978053/91e35778-a49f-41f7-8d7f-47ebd707d5f0
+
+\* This recording was made in the demo app (see the [Demo app](#demo-app) section for more details)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -157,7 +159,9 @@ To create smooth text animations, you have to follow these rules:
 
 #### Example
 
-https://github.com/MatiPl01/react-native-skia-responsive-text/assets/52978053/898a5aa3-0465-4292-909b-372337f4c67b
+https://github.com/MatiPl01/react-native-skia-responsive-text/assets/52978053/c72dffad-d091-4f4a-902d-3e8f57260c29
+
+\* This recording was made in the demo app (see the [Demo app](#demo-app) section for more details)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
