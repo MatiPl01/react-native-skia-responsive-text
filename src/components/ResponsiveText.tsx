@@ -64,7 +64,7 @@ function ResponsiveText({
   lineHeight: lineHeightProp,
   numberOfLines,
   onMeasure,
-  overflow = 'hidden',
+  overflow = 'visible',
   text = '',
   verticalAlignment: verticalAlignmentProp = 'top',
   width: widthProp,

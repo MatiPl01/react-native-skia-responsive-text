@@ -1,8 +1,8 @@
-<a name="readme-top"></a>
-
 # 🔠 React Native Skia Responsive Text
 
 A library providing a wrapper for the React Native Skia Text component, offering features like user-friendly text alignment, efficient multiline text management, and straightforward text truncation.
+
+<a name="readme-top"></a>
 
 <div align="center">
   <img src="./docs/banner.gif" />
@@ -78,24 +78,24 @@ const styles = StyleSheet.create({
 
 The `ResponsiveText` component accepts all the properties available to the `Text`` component from React Native Skia, while also introducing additional features. These include the ability to adjust text alignment, set the number of lines, and the ellipsize mode, among others.
 
-| Name                  | Type                                                                                       | Default          | Required | Description                                                                                                                                               |
-| --------------------- | ------------------------------------------------------------------------------------------ | ---------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| font                  | `SkFont`                                                                                   | -                | yes      | Font to use (React Native Skia doesn't require this property but `ResponsiveText` does in order to properly wrap text)                                    |
-| text                  | `string`                                                                                   | -                | yes      | Text to draw                                                                                                                                              |
-| x                     | `number`                                                                                   | 0                | no       | Left position of the text                                                                                                                                 |
-| y                     | `number`                                                                                   | 0                | no       | Top position the text                                                                                                                                     |
-| width                 | `number`                                                                                   | text line width  | no       | Width of the text component (isn't required but should be specified to properly render text)                                                              |
-| height                | `number`                                                                                   | text line height | no       | Height of the text component (used only for the vertical alignment. Overflowing text is visible)                                                          |
-| lineHeight            | `number`                                                                                   | fontSize         | no       | Text line height                                                                                                                                          |
-| overflow              | `'hidden'` &#124; `'visible'`                                                              | `'hidden'`       | no       | By default, React Native `Text` component is cropped to dimensions of the container. The `ResponsiveText` behaves similarly and crops overflowing content |
-| horizontalAlignment   | `'center'` &#124; `'center-left'` &#124; `'center-right'` &#124; `'left'` &#124; `'right'` | `left`           | no       | Text alignment in the X axis                                                                                                                              |
-| verticalAlignment     | `'bottom'` &#124; `'center'` &#124; `'top'`                                                | `top`            | no       | Text alignment in the Y axis                                                                                                                              |
-| numberOfLines         | `number`                                                                                   | -                | no       | Maximum number of text lines (the overflowing text will be cropped to occupy at most `numberOfLines` lines)                                               |
-| ellipsizeMode         | `'clip'` &#124; `'head'` &#124; `'middle'` &#124; `'tail'`                                 | `'tail'`         | no       | Determines how the overflowing text will be truncated                                                                                                     |
-| color                 | `string`                                                                                   | `#000000`        | no       | The color of the text                                                                                                                                     |
-| backgroundColor       | `string`                                                                                   | -                | no       | The color of the text background                                                                                                                          |
-| animationSettings     | `AnimationSettings`\*                                                                      | -                | no       | Text lines transition animation settings (on alignment, lineHeight, text height changes)                                                                  |
-| animationProgress\*\* | `SharedValue<number>`                                                                      | -                | no       | Custom animation progress (can be used instead of animationSettings)                                                                                      |
+| Name                  | Type                                                                                       | Default          | Required | Description                                                                                                                                                                          |
+| --------------------- | ------------------------------------------------------------------------------------------ | ---------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| font                  | `SkFont`                                                                                   | -                | yes      | Font to use (React Native Skia doesn't require this property but `ResponsiveText` does in order to properly wrap text)                                                               |
+| text                  | `string`                                                                                   | -                | yes      | Text to draw                                                                                                                                                                         |
+| x                     | `number`                                                                                   | 0                | no       | Left position of the text                                                                                                                                                            |
+| y                     | `number`                                                                                   | 0                | no       | Top position the text                                                                                                                                                                |
+| width                 | `number`                                                                                   | text line width  | no       | Width of the text component (isn't required but should be specified to properly render text)                                                                                         |
+| height                | `number`                                                                                   | text line height | no       | Height of the text component (used only for the vertical alignment. Overflowing text is visible)                                                                                     |
+| lineHeight            | `number`                                                                                   | fontSize         | no       | Text line height                                                                                                                                                                     |
+| overflow              | `'hidden'` &#124; `'visible'`                                                              | `'visible'`      | no       | React Native `Text` component is cropped to dimensions of the container. The `ResponsiveText` doesn't crop the overflowing content by default. To do this, set overflow to `hidden`. |
+| horizontalAlignment   | `'center'` &#124; `'center-left'` &#124; `'center-right'` &#124; `'left'` &#124; `'right'` | `left`           | no       | Text alignment in the X axis                                                                                                                                                         |
+| verticalAlignment     | `'bottom'` &#124; `'center'` &#124; `'top'`                                                | `top`            | no       | Text alignment in the Y axis                                                                                                                                                         |
+| numberOfLines         | `number`                                                                                   | -                | no       | Maximum number of text lines (the overflowing text will be cropped to occupy at most `numberOfLines` lines)                                                                          |
+| ellipsizeMode         | `'clip'` &#124; `'head'` &#124; `'middle'` &#124; `'tail'`                                 | `'tail'`         | no       | Determines how the overflowing text will be truncated                                                                                                                                |
+| color                 | `string`                                                                                   | `#000000`        | no       | The color of the text                                                                                                                                                                |
+| backgroundColor       | `string`                                                                                   | -                | no       | The color of the text background                                                                                                                                                     |
+| animationSettings     | `AnimationSettings`\*                                                                      | -                | no       | Text lines transition animation settings (on alignment, lineHeight, text height changes)                                                                                             |
+| animationProgress\*\* | `SharedValue<number>`                                                                      | -                | no       | Custom animation progress (can be used instead of animationSettings)                                                                                                                 |
 
 \*`AnimationSettings` type contains the following properties:
 
@@ -137,7 +137,9 @@ When `animationSettings` are specified, every change of `ResponsiveText` propert
 
 #### Example
 
-https://github.com/MatiPl01/react-native-skia-responsive-text/assets/52978053/2ae0fb10-8e28-4090-9854-39df69fa1e48
+https://github.com/MatiPl01/react-native-skia-responsive-text/assets/52978053/91e35778-a49f-41f7-8d7f-47ebd707d5f0
+
+\* This recording was made in the demo app (see the [Demo app](#demo-app) section for more details)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -157,7 +159,9 @@ To create smooth text animations, you have to follow these rules:
 
 #### Example
 
-https://github.com/MatiPl01/react-native-skia-responsive-text/assets/52978053/898a5aa3-0465-4292-909b-372337f4c67b
+https://github.com/MatiPl01/react-native-skia-responsive-text/assets/52978053/c72dffad-d091-4f4a-902d-3e8f57260c29
+
+\* This recording was made in the demo app (see the [Demo app](#demo-app) section for more details)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
