@@ -102,9 +102,8 @@ export default function ReadmeExample() {
         verticalAlignment={verticalAlignment}
         width={size}
         x={(width - size) / 2}
-        y={(height - size) / 2}>
-        \
-      </ResponsiveText>
+        y={(height - size) / 2}
+      />
     </Canvas>
   );
 }
