@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/MatiPl01/react-native-skia-responsive-text/compare/v1.0.1...v1.0.2) (2023-10-28)
+
+
+### Bug Fixes
+
+* Regenerate lockfile ([#24](https://github.com/MatiPl01/react-native-skia-responsive-text/issues/24)) ([ff051c9](https://github.com/MatiPl01/react-native-skia-responsive-text/commit/ff051c9ed0bdd92a03558a4aaece004feb61838a))
+
 ## [1.0.1](https://github.com/MatiPl01/react-native-skia-responsive-text/compare/v1.0.0...v1.0.1) (2023-10-28)
 
 
