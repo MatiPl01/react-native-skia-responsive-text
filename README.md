@@ -179,7 +179,7 @@ yarn
 You can start the example app using the following command.
 
 ```sh
-yarn example
+yarn example start
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
