@@ -64,3 +64,4 @@ yarn-error.log
 
 dist/
 react-native-skia-responsive-text*.tgz
+.expo

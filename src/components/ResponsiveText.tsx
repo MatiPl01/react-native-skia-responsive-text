@@ -14,7 +14,6 @@ import {
   AnimationSettings,
   EllipsizeMode,
   HorizontalAlignment,
-  PartialBy,
   TextLineData,
   TextOverflow,
   VerticalAlignment
@@ -29,7 +28,7 @@ import TextLine from './TextLine';
 
 const LINE_HEIGHT_MULTIPLIER = 1.5;
 
-type ResponsiveTextProps = PartialBy<TextProps, 'x' | 'y'> & {
+type ResponsiveTextProps = Omit<TextProps, 'x' | 'y'> & {
   ellipsizeMode?: EllipsizeMode;
   font: SkFont;
   height?: number;
@@ -42,6 +41,8 @@ type ResponsiveTextProps = PartialBy<TextProps, 'x' | 'y'> & {
     horizontalAlignment?: HorizontalAlignment;
     lineHeight?: number;
     verticalAlignment?: VerticalAlignment;
+    x?: number;
+    y?: number;
   }> &
   (
     | { animationProgress?: SharedValue<number> }
@@ -55,7 +56,7 @@ type ResponsiveTextPrivateProps = ResponsiveTextProps & {
 
 function ResponsiveText({
   animationSettings: animationSettingsProp,
-  backgroundColor: backgroundColorProp = 'transparent',
+  backgroundColor: backgroundColorProp,
   children,
   ellipsizeMode,
   font,
@@ -68,8 +69,8 @@ function ResponsiveText({
   text = '',
   verticalAlignment: verticalAlignmentProp = 'top',
   width: widthProp,
-  x = 0,
-  y = 0,
+  x: xProp = 0,
+  y: yProp = 0,
   ...rest
 }: ResponsiveTextPrivateProps) {
   const fontSize = font.getSize();
@@ -86,7 +87,11 @@ function ResponsiveText({
   }, [animationSettingsProp]);
 
   // Create shared values from animatable props
-  const backgroundColor = useAnimatableValue(backgroundColorProp);
+  const x = useAnimatableValue(xProp);
+  const y = useAnimatableValue(yProp);
+  const backgroundColor = useAnimatableValue(
+    backgroundColorProp ?? 'transparent'
+  );
   const lineHeight = useAnimatableValue(
     lineHeightProp ?? LINE_HEIGHT_MULTIPLIER * fontSize
   );
@@ -140,7 +145,7 @@ function ResponsiveText({
     )
   );
 
-  const backgroundComponent = backgroundColor && (
+  const backgroundComponent = backgroundColorProp && (
     <Rect
       color={backgroundColor}
       height={backgroundHeight}
@@ -174,8 +179,13 @@ function ResponsiveText({
     [backgroundHeight, width]
   );
 
+  const groupTransform = useDerivedValue(() => [
+    { translateX: x.value },
+    { translateY: y.value }
+  ]);
+
   return (
-    <Group transform={[{ translateX: x }, { translateY: y }]}>
+    <Group transform={groupTransform}>
       {overflow === 'hidden' ? (
         <>
           {backgroundComponent && (
