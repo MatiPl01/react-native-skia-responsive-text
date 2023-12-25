@@ -12,7 +12,7 @@
     "@shopify/react-native-skia": "0.1.196",
     "@types/react": "^18.2.33",
     "eslint": "^8.52.0",
-    "eslint-config-react-native-matipl01": "^1.0.2",
+    "eslint-config-react-native-matipl01": "^2.1.0",
     "husky": "^8.0.0",
     "jest": "^29.7.0",
     "lint-staged": "^15.0.2",
