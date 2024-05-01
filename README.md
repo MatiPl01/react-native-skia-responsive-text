@@ -1,3 +1,7 @@
+> [!IMPORTANT]  
+> The **paragraph API** was added to the **React Native Skia** library. See [this](https://shopify.github.io/react-native-skia/docs/text/paragraph/) page in the documentation for more details about the usage.
+> This library can still be used for **text animations**, such as animated alignment change shown on the example GIF below.
+
 # 🔠 React Native Skia Responsive Text
 
 A library providing a wrapper for the React Native Skia Text component, offering features like user-friendly text alignment, efficient multiline text management, and straightforward text truncation.
