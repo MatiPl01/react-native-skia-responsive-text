@@ -20,7 +20,7 @@
     "react": "18.2.0",
     "react-native": "0.72.6",
     "react-native-builder-bob": "^0.23.1",
-    "react-native-reanimated": "~3.3.0",
+    "react-native-reanimated": "~3.6.1",
     "semantic-release": "^22.0.5",
     "syncpack": "^11.2.1",
     "typescript": "^5.2.2"
@@ -72,7 +72,7 @@
     "cliui": "8.0.1",
     "react": "18.2.0",
     "react-native": "0.72.6",
-    "react-native-reanimated": "3.3.0"
+    "react-native-reanimated": "3.6.1"
   },
   "scripts": {
     "bootstrap": "yarn example && yarn",
